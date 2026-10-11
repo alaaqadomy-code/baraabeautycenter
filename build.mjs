@@ -92,7 +92,7 @@ const services = [
   { t: 'تجهيز المرافقات', d: 'مكياج وتسريحات لأهل العروس وصاحباتها بنفس اليوم.', img: 'ph:bride-pearls', href: '/bridal-makeup/', alt: 'عروس بطرحة اللؤلؤ من أعمال براءة بيوتي سنتر' },
   { t: 'دورات المكياج والماستر كلاس', d: 'دورات خاصة وماستر كلاس مع خبيرة المكياج براءة علي.', img: 'ph:turquoise-liner', href: '/makeup-courses/', alt: 'تقنية التركواز تحت العين من دروس براءة علي' },
   { t: 'الخدمة المنزلية الفاخرة', d: 'تجربة الصالون كاملة لعتبة دارك، بنفس الجودة وأعلى معايير التعقيم.', img: 'ph:soft-glam', href: '/home-service/', alt: 'مكياج سوفت جلام من أعمال براءة بيوتي سنتر' },
-  { t: 'VIP لعرايس عمّان', d: 'تجهيز عرايس الفستان الأبيض بالبيت أو غرفة الفندق داخل عمّان مع مدام براءة.', img: 'ph:bride-veil', href: '/home-service/', alt: 'عروس بالطرحة من أعمال براءة بيوتي سنتر' },
+  { t: 'VIP بالبيت أو الفندق', d: 'تجهيز العروس والمرافقات بالبيت أو غرفة الفندق، بعمّان وكل محافظات المملكة.', img: 'ph:bride-veil', href: '/home-service/', alt: 'عروس بالطرحة من أعمال براءة بيوتي سنتر' },
 ];
 
 const WORK = [
@@ -124,18 +124,76 @@ const revSec = (list, more = true) => `<section class="sec" aria-labelledby="rev
   ${more ? `<p style="text-align:center;margin-top:36px"><a class="btn btn--ghost" href="/reviews/">كل الآراء (${reviews.length}) ${I.arrow}</a> <a class="btn btn--ghost" href="${B.maps}" target="_blank" rel="noopener">تقييمات جوجل</a></p>` : ''}
 </div></section>`;
 
+// ---------- beauty services (confirmed by the salon 2026-10-11; no prices/brands invented) ----------
+const BEAUTY = [
+  { path: '/protein-keratin/', crumb: 'بروتين وكيراتين', hero: P.blow, icon: 'sparkle',
+    title: `بروتين وكيراتين في ${B.city} | فرد وتنعيم الشعر – ${B.name}`,
+    desc: `بروتين وكيراتين في ${B.city}، ${B.area}: فرد وتنعيم الشعر وتخفيف الهيشان، مع نصائح العناية بعد الجلسة. بالسنتر أو بالبيت. ${B.phoneLocal}`,
+    h1: 'شعر ناعم بدون تعب كل يوم', lead: 'جلسات بروتين وكيراتين لفرد الشعر وتنعيمه وتخفيف الهيشان، مع شرح واضح للعناية بعد الجلسة.',
+    feats: [['sparkle', 'تنعيم وفرد', 'شعر أنعم وأسهل بالتسريح والسشوار.'], ['heart', 'تقييم الشعر أولاً', 'منشوف حالة شعرك قبل ما نختار العلاج المناسب.'], ['shield', 'عناية بعد الجلسة', 'منعطيكِ تعليمات الغسيل والشامبو المناسب.']],
+    faq: [['شو الفرق بين البروتين والكيراتين؟', 'الاتنين علاجات لتنعيم الشعر وتخفيف الهيشان، والفرق بالتركيبة والنتيجة. منقيّم شعرك بالسنتر ومنقترح الأنسب إلك.'], ['قديش بتدوم نتيجة البروتين؟', 'بتختلف حسب نوع الشعر وطريقة العناية والغسيل بعد الجلسة. منعطيكِ تعليمات تساعد النتيجة تطوّل.'], ['هل بقدر أعمله بالبيت؟', `نعم، ضمن الخدمة المنزلية. للحجز ${B.phoneHomeLocal}.`]] },
+  { path: '/hair-color/', crumb: 'صبغة شعر', hero: P.hair2, icon: 'heart',
+    title: `صبغة شعر في ${B.city} | ألوان وهايلايت – ${B.name}`,
+    desc: `صبغة شعر في ${B.city}، ${B.area}: لون كامل، تغطية الشيب، وهايلايت ولولايت، مع اختيار اللون المناسب لبشرتك. ${B.phoneLocal}`,
+    h1: 'لون جديد بيليق فيكِ', lead: 'صبغة كاملة، تغطية شيب، وهايلايت أو لولايت، مع استشارة لاختيار اللون اللي بيناسب بشرتك وستايلك.',
+    feats: [['heart', 'استشارة لون', 'منختار الدرجة حسب لون بشرتك وعيونك.'], ['sparkle', 'هايلايت ولولايت', 'لمسات ضوء أو عمق للشعر.'], ['shield', 'تغطية الشيب', 'لون موحّد من الجذور للأطراف.']],
+    faq: [['كيف بختار لون الصبغة المناسب؟', 'منعتمد على لون بشرتك وعيونك ولون شعرك الحالي. الدرجات الدافية بتليق عادة بالبشرة القمحية، ومنقترح عليكِ قبل ما نبلّش.'], ['هل بتعملوا هايلايت؟', 'نعم، هايلايت ولولايت وصبغة كاملة.'], ['هل الصبغة بتأثر على البروتين؟', 'الأفضل تخططي الترتيب مع الفريق، لأنه في توقيت مناسب بين الصبغة وعلاجات التنعيم. اسألينا قبل ما تحجزي.']] },
+  { path: '/nails/', crumb: 'مناكير وبديكير', hero: P.nails, icon: 'sparkle',
+    title: `مناكير وبديكير في ${B.city} | عناية بالأظافر – ${B.name}`,
+    desc: `مناكير وبديكير في ${B.city}، ${B.area}: تنظيف وترتيب الأظافر والعناية بالإيدين والإجرين، بأدوات معقّمة. بالسنتر أو بالبيت. ${B.phoneLocal}`,
+    h1: 'تفاصيل صغيرة بتكمّل الإطلالة', lead: 'مناكير وبديكير بأدوات معقّمة لكل زبونة، لإيدين وإجرين مرتبين لكل يوم أو لمناسبتك.',
+    feats: [['sparkle', 'مناكير', 'تنظيف وتشكيل الأظافر والعناية بالجلد حواليها.'], ['heart', 'بديكير', 'عناية كاملة بالإجرين.'], ['shield', 'أدوات معقّمة', 'تعقيم كامل لكل زبونة.']],
+    faq: [['هل الأدوات معقّمة؟', 'نعم، نلتزم بأعلى معايير التعقيم لكل زبونة.'], ['هل بتعملوا مناكير للعروس؟', 'أكيد، والأفضل تحجزيه قبل العرس بيوم أو يومين لينسّق مع لوكك.'], ['هل في مناكير وبديكير بالبيت؟', `نعم، ضمن الخدمة المنزلية. للحجز ${B.phoneHomeLocal}.`]] },
+  { path: '/lashes/', crumb: 'تركيب رموش', hero: P.lashes, icon: 'crown',
+    title: `تركيب رموش في ${B.city} | رموش للعرايس والسهرات – ${B.name}`,
+    desc: `تركيب رموش في ${B.city}، ${B.area}: رموش طبيعية أو كثيفة للسهرات والعرايس، متنسّقة مع شكل عيونك. ${B.phoneLocal}`,
+    h1: 'نظرة بتحكي لحالها', lead: 'رموش طبيعية للطلة اليومية أو كثيفة للسهرة والعرس، بنختارها حسب شكل عيونك ولوك المكياج.',
+    feats: [['heart', 'طبيعية', 'كثافة خفيفة بتبين طبيعية.'], ['crown', 'للعرايس والسهرات', 'رموش أكثف بتطلع حلوة بالصور.'], ['sparkle', 'حسب شكل العين', 'منختار الطول والانحناء المناسب.']],
+    faq: [['شو نوع الرموش المناسب إلي؟', 'بيعتمد على شكل عيونك والمناسبة. منقترح الطول والكثافة قبل التركيب.'], ['هل الرموش جزء من مكياج العروس؟', 'الرموش لمسة أساسية بمكياج العرايس والسهرات، ومنتفق على تفاصيلها وقت الحجز.'], ['كيف بحجز؟', `اتصلي على ${B.phoneLocal} أو راسلينا على إنستغرام.`]] },
+  { path: '/eyebrows/', crumb: 'حواجب', hero: P.mua2, icon: 'sparkle',
+    title: `حواجب في ${B.city} | تنظيف وترتيب وتشقير الحواجب – ${B.name}`,
+    desc: `خدمات الحواجب في ${B.city}، ${B.area}: تنظيف وترتيب وشكل مناسب لوجهك. بالسنتر أو بالبيت. ${B.phoneLocal}`,
+    h1: 'شكل حواجب بيرسم وجهك', lead: 'تنظيف وترتيب الحواجب بشكل بيناسب ملامح وجهك، لإطلالة مرتبة كل يوم أو قبل مناسبتك.',
+    feats: [['sparkle', 'شكل مناسب لوجهك', 'منرسم الشكل حسب ملامحك.'], ['heart', 'تنظيف وترتيب', 'نتيجة نظيفة ومرتبة.'], ['crown', 'قبل المناسبات', 'جزء من تجهيز العروس والسهرة.']],
+    faq: [['متى الأفضل أرتّب حواجبي قبل العرس؟', 'قبل العرس بكم يوم، عشان يختفي أي احمرار وتكون النتيجة واضحة يوم العرس.'], ['شو الخدمات اللي بتقدموها للحواجب؟', 'تنظيف وترتيب الحواجب وتشكيلها حسب الوجه. اسألينا عن التفاصيل وقت الحجز.'], ['هل الخدمة متوفرة بالبيت؟', `نعم، ضمن الخدمة المنزلية. للحجز ${B.phoneHomeLocal}.`]] },
+  { path: '/facial/', crumb: 'تنظيف بشرة', hero: P.facial, icon: 'shield',
+    title: `تنظيف بشرة في ${B.city} | جلسات عناية بالبشرة – ${B.name}`,
+    desc: `تنظيف بشرة في ${B.city}، ${B.area}: جلسات تنظيف وعناية حسب نوع بشرتك، وتحضير البشرة قبل العرس والمناسبات. ${B.phoneLocal}`,
+    h1: 'بشرة نضيفة، مكياج أحلى', lead: 'جلسات تنظيف وعناية بالبشرة حسب نوع بشرتك، وتحضير للعروس قبل العرس عشان المكياج يثبت ويطلع أنعم.',
+    feats: [['shield', 'حسب نوع بشرتك', 'دهنية، جافة، مختلطة أو حساسة.'], ['sparkle', 'تحضير العروس', 'جلسة قبل العرس بوقت كافي.'], ['heart', 'نصائح عناية', 'روتين بسيط تكمّليه بالبيت.']],
+    faq: [['متى أعمل تنظيف بشرة قبل العرس؟', 'الأفضل قبل العرس بأسبوع لأسبوعين، عشان تهدى البشرة من أي احمرار. اقرئي كمان دليل تحضير البشرة بالمدونة.'], ['هل تنظيف البشرة مناسب للبشرة الحساسة؟', 'منقيّم بشرتك قبل الجلسة ومنختار الخطوات المناسبة إلها.'], ['كيف بحجز؟', `اتصلي على ${B.phoneLocal}.`]] },
+  { path: '/halawa/', crumb: 'حلاوة', hero: P.salon, icon: 'heart',
+    title: `حلاوة في ${B.city} | إزالة الشعر بالحلاوة – ${B.name}`,
+    desc: `حلاوة في ${B.city}، ${B.area}: إزالة الشعر بالحلاوة للوجه والجسم بخصوصية تامة، وتجهيز العروس قبل العرس. بالسنتر أو بالبيت. ${B.phoneLocal}`,
+    h1: 'نعومة بخصوصية تامة', lead: 'إزالة الشعر بالحلاوة للوجه والجسم بأجواء نسائية مريحة وخصوصية تامة، وضمن تجهيزات العروس.',
+    feats: [['shield', 'خصوصية تامة', 'سنتر نسائي وأجواء مريحة.'], ['heart', 'وجه وجسم', 'حسب طلبك.'], ['crown', 'تجهيز العروس', 'ضمن تجهيزات ما قبل العرس.']],
+    faq: [['متى أعمل حلاوة قبل العرس؟', 'قبل العرس بيومين لتلاتة، عشان يروح أي احمرار.'], ['هل في حلاوة بالبيت؟', `نعم، ضمن الخدمة المنزلية. للحجز ${B.phoneHomeLocal}.`], ['هل السنتر نسائي؟', 'نعم، براءة بيوتي سنتر صالون نسائي.']] },
+];
+// Zarqa neighbourhoods the salon serves (one section, not doorway pages)
+const AREAS = ['الزرقاء الجديدة', 'الرصيفة', 'الهاشمية', 'ضاحية الأمير حسن', 'جبل طارق', 'عوجان', 'بيرين', 'حي معصوم', 'الغويرية', 'شبيب', 'حي الأمير محمد'];
+const GOVS = ['عمّان', 'الزرقاء', 'إربد', 'السلط', 'مادبا', 'المفرق', 'جرش', 'عجلون', 'الكرك', 'الطفيلة', 'معان', 'العقبة'];
+const areasSec = () => `<section class="sec" aria-labelledby="areas-h"><div class="wrap">
+  <div class="sec__head center" data-reveal><span class="eyebrow">مناطق الخدمة</span><h2 id="areas-h">من وين بتجينا؟</h2>
+  <p class="muted">السنتر في ${B.area} بالزرقاء، وزبوناتنا بيجوا من كل أحياء المدينة: ${AREAS.join('، ')}. وإذا ما بدك تطلعي من البيت، منجيكِ لعندك.</p></div>
+  <p class="muted" style="text-align:center;max-width:62ch;margin:0 auto">الخدمة المنزلية والفندقية بتوصل لـ${GOVS.join('، ')}. <a href="/home-service/" style="color:var(--gold-2)">تفاصيل الخدمة المنزلية</a> · <a href="/amman-makeup-artist/" style="color:var(--gold-2)">الخدمة بعمّان</a> · <a href="${B.maps}" target="_blank" rel="noopener" style="color:var(--gold-2)">موقع السنتر على الخريطة</a></p>
+</div></section>`;
+const beautySec = () => `<section class="sec sec--light" aria-labelledby="beauty-h"><div class="wrap">
+  <div class="sec__head center" data-reveal><span class="eyebrow">شعر · بشرة · أظافر</span><h2 id="beauty-h">كل اللي بتحتاجيه بمكان واحد</h2></div>
+  <nav class="catnav" aria-label="خدمات التجميل" style="justify-content:center;flex-wrap:wrap;overflow:visible">${[['/hair-styling/', 'سشوار وتسريحات'], ...BEAUTY.map(x => [x.path, x.crumb])].map(([h, t]) => `<a href="${h}">${t}</a>`).join('')}</nav>
+</div></section>`;
+
 // ---------- FAQ banks ----------
 const faqHome = [
   ['وين موقع براءة بيوتي سنتر؟', `براءة بيوتي سنتر في ${B.city}، ${B.area}، الأردن. رقم السنتر ${B.phoneLocal}.`],
   ['كيف بحجز موعد؟', `اتصلي على رقم السنتر ${B.phoneLocal}، أو راسلينا على إنستغرام. للخدمة المنزلية: ${B.phoneHomeLocal} (اتصال أو واتساب). المواعيد محدودة شهرياً، فاحجزي بدري.`],
-  ['هل في خدمة منزلية؟', `نعم، خدمة تجميل منزلية فاخرة تشمل السشوار وتصفيف الشعر والمكياج. وخدمة تجهيز عرايس الفستان الأبيض بالبيت أو الفندق مخصصة لعرايس عمّان. رقم الخدمة المنزلية ${B.phoneHomeLocal}.`],
+  ['هل في خدمة منزلية؟', `نعم، خدمة تجميل منزلية فاخرة تشمل السشوار وتصفيف الشعر والمكياج. وتجهيز العروس والمرافقات بالبيت أو الفندق، بالزرقاء وعمّان وكل محافظات المملكة. رقم الخدمة المنزلية ${B.phoneHomeLocal}.`],
   ['شو الخدمات اللي بتقدموها؟', 'مكياج عرائس وعروس الحنّة، مكياج سهرات ومناسبات، سشوار وتسريحات، تجهيز المرافقات، خدمة منزلية وفندقية، ودورات مكياج خاصة وماستر كلاس.'],
   ['مين خبيرة المكياج في السنتر؟', `${B.owner}، خبيرة مكياج جمّلت أكثر من 1000 عروس، وبتقدّم دورات خاصة وماستر كلاس.`],
 ];
 const faqBridal = [
   ['متى لازم أحجز مكياج العرس؟', 'المواعيد متوفرة بأعداد محدودة شهرياً، فننصحك تحجزي بدري خصوصاً بموسم الأعراس.'],
   ['هل مدام براءة بتعمل مكياج العروس بنفسها؟', 'نعم، مكياج عرايس الفستان الأبيض مع مدام براءة شخصياً.'],
-  ['هل بتجوا عالبيت أو الفندق يوم العرس؟', `نعم، خدمة تجهيز العروس بالبيت أو غرفة الفندق متوفرة لعرايس عمّان (فستان أبيض). وبالزرقاء تشرفينا بالسنتر في ${B.area}.`],
+  ['هل بتجوا عالبيت أو الفندق يوم العرس؟', `نعم، تجهيز العروس والمرافقات بالبيت أو غرفة الفندق متوفر بكل محافظات المملكة. أو تشرفينا بالسنتر في ${B.city}، ${B.area}.`],
   ['هل بتجهزوا أهل العروس وصاحباتها؟', 'أكيد، في خدمة للعروس والمرافقات بنفس اليوم.'],
   ['هل في لوك لعروس الحنّة؟', 'نعم، نجهّز عروس الحنّة بلوك خاص بيناسب أجواء الليلة.'],
 ];
@@ -148,7 +206,7 @@ const faqMua = [
 ];
 const faqHomeSvc = [
   ['شو بتشمل الخدمة المنزلية؟', 'سشوار وفير وتصفيف شعر لجميع المناسبات، ومكياج احترافي، وتجهيز عرايس الأبيض مع مدام براءة شخصياً.'],
-  ['هل خدمة العرايس بالبيت أو الفندق متوفرة بكل المناطق؟', 'خدمة تجهيز عرايس الفستان الأبيض بالبيت والفندق مخصصة لعرايس عمّان.'],
+  ['هل خدمة العرايس بالبيت أو الفندق متوفرة بكل المناطق؟', 'نعم، الخدمة المنزلية والفندقية بتوصل لعمّان وكل محافظات المملكة، وبتشمل العرايس والمرافقات وكل خدمات السنتر.'],
   ['كيف بحجز الخدمة المنزلية؟', `اتصلي أو راسلينا واتساب على ${B.phoneHomeLocal}. المواعيد محدودة شهرياً.`],
   ['هل الأدوات معقّمة؟', 'نعم، نلتزم بأعلى معايير التعقيم والاحترافية ونستخدم أرقى مواد التجميل العالمية.'],
 ];
@@ -209,6 +267,8 @@ const footer = () => `<footer class="ftr"><div class="wrap">
       <li><a href="/evening-makeup/">مكياج سهرة في ${B.city}</a></li>
       <li><a href="/hair-styling/">سشوار وتسريحات في ${B.city}</a></li>
       <li><a href="/henna-makeup/">مكياج عروس الحنّة</a></li>
+      <li><a href="/amman-makeup-artist/">ميك أب آرتست في عمّان</a></li>
+      ${BEAUTY.map(x => `<li><a href="${x.path}">${x.crumb} في ${B.city}</a></li>`).join('\n      ')}
       <li><a href="/reviews/">آراء الزبونات</a></li>
       <li><a href="/makeup-courses/">دورات المكياج</a></li>
       <li><a href="/blog/">مدونة التجميل</a></li>
@@ -274,12 +334,12 @@ const salonLD = {
   telephone: B.phone, priceRange: '$$', hasMap: B.maps,
   geo: { '@type': 'GeoCoordinates', latitude: B.geo.lat, longitude: B.geo.lng },
   address: { '@type': 'PostalAddress', streetAddress: B.area, addressLocality: B.city, addressRegion: 'محافظة الزرقاء', addressCountry: 'JO' },
-  areaServed: [{ '@type': 'City', name: B.city }, { '@type': 'City', name: 'عمّان' }],
+  areaServed: [{ '@type': 'City', name: B.city }, ...AREAS.map(name => ({ '@type': 'Place', name: `${name}، ${B.city}` })), { '@type': 'City', name: 'عمّان' }, { '@type': 'Country', name: 'الأردن' }],
   sameAs: [B.fb, B.ig, B.snap, B.maps],
   founder: { '@type': 'Person', '@id': personId, url: `${SITE}/about-baraa/`, name: B.owner, alternateName: "Bara'a Ali", jobTitle: 'خبيرة مكياج', sameAs: [B.ig, B.snap] },
   contactPoint: [{ '@type': 'ContactPoint', telephone: B.phone, contactType: 'reservations', name: 'رقم السنتر' }, { '@type': 'ContactPoint', telephone: B.phoneHome, contactType: 'reservations', name: 'الخدمة المنزلية' }],
   knowsLanguage: ['ar'],
-  hasOfferCatalog: { '@type': 'OfferCatalog', name: 'خدمات التجميل', itemListElement: services.map(s => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.t, description: s.d } })) },
+  hasOfferCatalog: { '@type': 'OfferCatalog', name: 'خدمات التجميل', itemListElement: [...services.map(s => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.t, description: s.d } })), ...BEAUTY.map(x => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: x.crumb, description: x.desc, url: SITE + x.path } }))] },
 };
 const ld = (path, extra = []) => {
   const graph = [
@@ -341,7 +401,7 @@ const home = page({
 <link rel="preload" as="image" media="(min-width:901px)" imagesrcset="${BASE}/photos/hero-d-640.webp 640w, ${BASE}/photos/hero-d.webp 1320w" imagesizes="62vw" fetchpriority="high">
 `,
   title: `${B.name} | صالون تجميل نسائي وميك أب آرتست في ${B.city}`,
-  desc: `${B.name} في ${B.city} (${B.area}): مكياج عرائس مع خبيرة المكياج ${B.owner}، أكثر من 1000 عروس، سهرات، سشوار وتسريحات، خدمة منزلية وVIP لعرايس عمّان. ${B.phoneLocal}`,
+  desc: `${B.name} في ${B.city} (${B.area}): مكياج عرائس مع خبيرة المكياج ${B.owner}، أكثر من 1000 عروس، سهرات، سشوار وتسريحات، خدمة منزلية وفندقية بكل المملكة. ${B.phoneLocal}`,
   schema: [faqLD(faqHome)],
   body: `
 <section class="hero" aria-labelledby="h1">
@@ -354,7 +414,7 @@ const home = page({
     <h1 id="h1">${words('جمالكِ يبدأ بلمسة براءة', 3)}</h1>
     <p class="hero__lead">مع خبيرة المكياج براءة علي: مكياج عرائس وسهرات، سشوار وتسريحات، خدمة منزلية وفندقية. أكثر من 1000 عروس طلعوا من عنّا ملكات.</p>
     ${ctas()}
-    <div class="hero__chips"><span class="chip">💍 +1000 عروس</span><span class="chip">VIP لعرايس عمّان</span><span class="chip">خدمة منزلية</span><span class="chip">🎓 دورات وماستر كلاس</span></div>
+    <div class="hero__chips"><span class="chip">💍 +1000 عروس</span><span class="chip">بيت وفندق بكل المملكة</span><span class="chip">خدمة منزلية</span><span class="chip">🎓 دورات وماستر كلاس</span></div>
   </div>
   <span class="scroll-cue" aria-hidden="true"></span>
 </section>
@@ -384,7 +444,7 @@ const home = page({
       <div>
         <div class="step" data-step="0"><span class="step__n">01</span><h3>استشارة واختيار الستايل</h3><p class="muted">ابعتيلنا صورة الفستان والستايل اللي بتحبيه، ونقترح عليكِ الألوان والتسريحة اللي بتناسب ملامحك ولون بشرتك.</p></div>
         <div class="step" data-step="1"><span class="step__n">02</span><h3>جلسة التجربة</h3><p class="muted">نجرّب الإطلالة قبل العرس ونعدّل لحد ما تحسّي إنها إنتِ، بس بأحلى نسخة.</p></div>
-        <div class="step" data-step="2"><span class="step__n">03</span><h3>يوم العرس</h3><p class="muted">بالسنتر بالزرقاء، أو ببيتك وغرفتك بالفندق إذا كنتِ عروس بعمّان. مكياج ثابت لآخر الليل، وتسريحة وطرحة متكتكة.</p><p><a class="btn" href="/bridal-makeup/">باقات العرائس ${I.arrow}</a></p></div>
+        <div class="step" data-step="2"><span class="step__n">03</span><h3>يوم العرس</h3><p class="muted">بالسنتر بالزرقاء، أو ببيتك أو غرفتك بالفندق وين ما كنتِ بالمملكة. مكياج ثابت لآخر الليل، وتسريحة وطرحة متكتكة.</p><p><a class="btn" href="/bridal-makeup/">باقات العرائس ${I.arrow}</a></p></div>
       </div>
     </div>
   </div>
@@ -395,12 +455,12 @@ const home = page({
     <div data-reveal>
       <span class="eyebrow">خدمة تجميل منزلية</span>
       <h2 id="home-h" style="font-size:clamp(2rem,4.4vw,3.4rem)">الصالون بيجي لعندك</h2>
-      <p class="muted">دلالكِ يوصلكِ وين ما كنتِ: سشوار وتسريحات ومكياج احترافي بنفس جودة السنتر، وعرايس الأبيض بعمّان مع مدام براءة شخصياً بالبيت أو الفندق.</p>
+      <p class="muted">دلالكِ يوصلكِ وين ما كنتِ: سشوار وتسريحات ومكياج احترافي بنفس جودة السنتر، وتجهيز العرايس والمرافقات بالبيت أو الفندق بعمّان وكل المحافظات.</p>
       <ul class="ticks"><li>سشوار وفير وتصفيف شعر لجميع المناسبات</li><li>أرقى مواد التجميل العالمية وأعلى معايير التعقيم</li><li>رقم الخدمة المنزلية: <a href="tel:${B.phoneHome}" dir="ltr">${B.phoneHomeLocal}</a></li></ul>
       <a class="btn" href="/home-service/">تفاصيل الخدمة المنزلية ${I.arrow}</a>
     </div>
     <div class="split__img" data-reveal="clip">${img(P.mua2, 'خبيرة مكياج تجهّز عميلة في منزلها')}
-      <div class="split__badge"><b>VIP لعرايس عمّان</b>بالبيت أو غرفة الفندق</div></div>
+      <div class="split__badge"><b>VIP بكل المملكة</b>بالبيت أو غرفة الفندق</div></div>
   </div>
 </section>
 
@@ -412,7 +472,9 @@ const home = page({
   </div>
 </section>
 
+${beautySec()}
 ${revSec(REV_HOME)}
+${areasSec()}
 
 <section class="sec sec--light" aria-labelledby="why-h">
   <div class="wrap">
@@ -420,7 +482,7 @@ ${revSec(REV_HOME)}
     <div class="feats">
       <div class="feat" data-reveal style="--d:0">${I.crown}<h3>+1000 عروس</h3><p>أكثر من ألف عروس جمّلتهم براءة علي بإطلالات فخمة وناعمة.</p></div>
       <div class="feat" data-reveal style="--d:1">${I.shield}<h3>نظافة وتعقيم</h3><p>أدوات معقّمة لكل عميلة ومنتجات احترافية أصلية.</p></div>
-      <div class="feat" data-reveal style="--d:2">${I.home}<h3>بيت وفندق</h3><p>خدمة منزلية فاخرة، وVIP لعرايس عمّان بالبيت أو الفندق.</p></div>
+      <div class="feat" data-reveal style="--d:2">${I.home}<h3>بيت وفندق</h3><p>خدمة منزلية وفندقية فاخرة بعمّان وكل محافظات المملكة.</p></div>
       <div class="feat" data-reveal style="--d:3">${I.sparkle}<h3>خبيرة بتعلّم</h3><p>دورات خاصة وماستر كلاس، لأن الخبرة الحقيقية بتنقال.</p></div>
     </div>
   </div>
@@ -466,16 +528,16 @@ const splitSec = ({ eyebrow, h, p, ticks, imgId, alt, rev = false, plum = false,
 const bridal = landing({
   path: '/bridal-makeup/', crumb: 'مكياج العرائس', hero: P.bride,
   title: `مكياج عرايس في ${B.city} | صالون عرايس وتجهيز عروس – ${B.name}`,
-  desc: `مكياج عرايس (ميكب عرايس) في ${B.city} مع مدام ${B.owner} شخصياً، أكثر من 1000 عروس. تسريحة وطرحة، عروس الحنّة، والمرافقات، وخدمة بالبيت أو الفندق لعرايس عمّان.`,
+  desc: `مكياج عرايس (ميكب عرايس) في ${B.city} مع مدام ${B.owner} شخصياً، أكثر من 1000 عروس. تسريحة وطرحة، عروس الحنّة، والمرافقات، وخدمة بالبيت أو الفندق بكل المملكة.`,
   eyebrow: `مكياج عرايس · ${B.city}`, h1: 'إطلالة ليلة العمر بتوقيع براءة', h1Shine: 3,
-  lead: 'مكياج احترافي وثابت مع مدام براءة شخصياً، تسريحة وطرحة متكتكة، بدون توتر ولا عجقة طريق. بالسنتر بالزرقاء، أو بالبيت والفندق لعرايس عمّان.',
+  lead: 'مكياج احترافي وثابت مع مدام براءة شخصياً، تسريحة وطرحة متكتكة، بدون توتر ولا عجقة طريق. بالسنتر بالزرقاء، أو بالبيت والفندق وين ما كنتِ بالمملكة.',
   faq: faqBridal,
   sections: `
 <section class="sec sec--light"><div class="wrap">
   <div class="sec__head" data-reveal><span class="eyebrow">باقة العروس</span><h2>كل تفصيلة محسوبة ليومك</h2><p class="muted">نشتغل معك خطوة بخطوة من الاستشارة لحد آخر صورة.</p></div>
   ${feats([['crown', 'مع مدام براءة', 'مكياج عرايس الأبيض بإيد خبيرة المكياج براءة علي شخصياً.'], ['heart', 'تسريحة وطرحة', 'تسريحة ثابتة وطرحة متكتكة طول الليل.'], ['sparkle', 'عروس الحنّة', 'لوك خاص لليلة الحنّة.'], ['home', 'بيت أو فندق', 'لعرايس عمّان: نوصلك لباب بيتك أو غرفتك بالفندق.']])}
 </div></section>
-${splitSec({ eyebrow: 'VIP لعرايس عمّان', h: 'يومك الكبير بروقان وراحة', p: 'خدمة تجهيز عرايس الفستان الأبيض بتوصلك لغاية باب بيتك أو غرفتك بالفندق داخل عمّان، مع مدام براءة.', ticks: ['ميك أب احترافي وثابت', 'تسريحة وطرحة متكتكة', 'أعداد محدودة شهرياً، احجزي بدري'], imgId: 'ph:bride-veil', alt: 'عروس بالطرحة من أعمال مدام براءة', plum: true, badge: '<b>بيت أو فندق</b>داخل عمّان' })}
+${splitSec({ eyebrow: 'VIP بالبيت أو الفندق', h: 'يومك الكبير بروقان وراحة', p: 'خدمة تجهيز العروس والمرافقات بتوصلك لغاية باب بيتك أو غرفتك بالفندق، بعمّان وكل محافظات المملكة.', ticks: ['ميك أب احترافي وثابت', 'تسريحة وطرحة متكتكة', 'أعداد محدودة شهرياً، احجزي بدري'], imgId: 'ph:bride-veil', alt: 'عروس بالطرحة من أعمال مدام براءة', plum: true, badge: '<b>بيت أو فندق</b>بكل المملكة' })}
 ${splitSec({ eyebrow: 'العروس والمرافقات', h: 'جهّزي أهلك وصاحباتك معك', p: `خدمة العرايس والمرافقات بالسنتر في ${B.city}، ${B.area}.`, ticks: ['مكياج وتسريحات للمرافقات', 'أجواء حلوة ومريحة مع فريق السنتر', `رقم السنتر: ${B.phoneLocal}`], imgId: 'ph:bride-salon', alt: 'مدام براءة تجهّز العروس في السنتر', rev: true })}`,
 });
 
@@ -497,17 +559,17 @@ ${splitSec({ eyebrow: 'تسريحات', h: 'كمّلي الإطلالة بتسر
 
 const homeSvc = landing({
   path: '/home-service/', crumb: 'خدمة تجميل منزلية', hero: P.mua2,
-  title: `خدمة تجميل منزلية | مكياج وسشوار بالبيت وعرايس عمّان VIP – ${B.name}`,
-  desc: `خدمة تجميل منزلية فاخرة من ${B.name}: سشوار وتسريحات ومكياج احترافي، وتجهيز عرايس الأبيض بالبيت أو الفندق في عمّان مع مدام براءة. ${B.phoneHomeLocal}`,
+  title: `خدمة تجميل منزلية | مكياج وسشوار بالبيت والفندق بكل الأردن – ${B.name}`,
+  desc: `خدمة تجميل منزلية فاخرة من ${B.name}: سشوار وتسريحات ومكياج احترافي، وتجهيز العرايس والمرافقات بالبيت أو الفندق، بالزرقاء وعمّان وكل المحافظات. ${B.phoneHomeLocal}`,
   eyebrow: 'خدمة منزلية وفندقية', h1: 'دلالكِ يوصلكِ وين ما كنتِ', h1Shine: 2,
   lead: 'أرقى تجارب الصالون وخبرات خبيراتنا مباشرة لعتبة داركِ، بنفس الجودة وأعلى معايير التعقيم. للحجز: 0790 690 117 (اتصال أو واتساب).',
   faq: faqHomeSvc,
   sections: `
 <section class="sec sec--light"><div class="wrap">
   <div class="sec__head" data-reveal><span class="eyebrow">كيف بتشتغل الخدمة؟</span><h2>ثلاث خطوات وبنكون عندك</h2></div>
-  ${feats([['wa', 'تواصلي معنا', `اتصلي أو راسلينا واتساب على ${B.phoneHomeLocal}.`], ['clock', 'نأكد الموعد', 'المواعيد محدودة شهرياً، فاحجزي بدري.'], ['home', 'بنوصل لعندك', 'لبيتك، أو لغرفتك بالفندق لعرايس عمّان.']])}
+  ${feats([['wa', 'تواصلي معنا', `اتصلي أو راسلينا واتساب على ${B.phoneHomeLocal}.`], ['clock', 'نأكد الموعد', 'المواعيد محدودة شهرياً، فاحجزي بدري.'], ['home', 'بنوصل لعندك', 'لبيتك أو غرفتك بالفندق، بعمّان وكل محافظات المملكة.']])}
 </div></section>
-${splitSec({ eyebrow: 'شو بنقدّم بالبيت؟', h: 'تجربة الصالون كاملة', p: 'لا داعي للانتظار أو عناء الطريق.', ticks: ['سشوار وفير وتصفيف شعر لجميع المناسبات', 'ميك أب احترافي يبرز جمالك الطبيعي', 'عرايس الأبيض مع مدام براءة شخصياً'], imgId: P.hair2, alt: 'تسريحة شعر في المنزل', plum: true, wa: B.waHome, badge: '<b>VIP</b>عرايس عمّان: بيت أو فندق' })}`,
+${splitSec({ eyebrow: 'شو بنقدّم بالبيت؟', h: 'تجربة الصالون كاملة', p: 'لا داعي للانتظار أو عناء الطريق.', ticks: ['سشوار وفير وتصفيف شعر لجميع المناسبات', 'ميك أب احترافي يبرز جمالك الطبيعي', 'تجهيز العروس والمرافقات', 'بروتين وصبغة وأظافر ورموش وحواجب وتنظيف بشرة وحلاوة'], imgId: P.hair2, alt: 'تسريحة شعر في المنزل', plum: true, wa: B.waHome, badge: '<b>VIP</b>عرايس عمّان: بيت أو فندق' })}`,
 });
 
 const faqEngage = [
@@ -577,6 +639,39 @@ const henna = landing({
 ${splitSec({ eyebrow: 'من أعمالنا', h: 'عروس الحنّة بالثوب المطرّز', p: 'بنشتغل على لوك أجرأ من مكياج العرس، لأنه الثوب والأجواء بيحتملوا ألوان أقوى.', ticks: ['عيون محدّدة ورموش', 'بشرة مشرقة بتلمع بالصور', 'تثبيت يدوم طول السهرة'], imgId: 'ph:henna-bride', alt: 'عروس الحنة بالثوب المطرّز من أعمال براءة بيوتي سنتر', plum: true })}`,
 });
 
+const beautyPage = x => landing({
+  path: x.path, crumb: x.crumb, hero: x.hero, title: x.title, desc: x.desc,
+  eyebrow: `${x.crumb} · ${B.city}`, h1: x.h1, h1Shine: 2, lead: x.lead, faq: x.faq,
+  sections: `
+<section class="sec sec--light"><div class="wrap">
+  <div class="sec__head" data-reveal><span class="eyebrow">${x.crumb}</span><h2>${x.crumb} في ${B.name}</h2></div>
+  ${feats(x.feats)}
+</div></section>
+${splitSec({ eyebrow: 'بالسنتر أو بالبيت', h: 'وين ما كنتِ', p: `بالسنتر في ${B.city}، ${B.area}، أو ببيتك ضمن الخدمة المنزلية بكل محافظات المملكة.`, ticks: [`السنتر: ${B.phoneLocal}`, `الخدمة المنزلية: ${B.phoneHomeLocal}`, 'أدوات معقّمة ومنتجات احترافية'], imgId: P.cosmetics, alt: `${x.crumb} في ${B.name}`, plum: true })}
+${beautySec()}`,
+});
+
+const amman = landing({
+  path: '/amman-makeup-artist/', crumb: 'ميك أب آرتست في عمّان', hero: P.bride3, also: ['home-service'],
+  title: `ميك أب آرتست في عمّان | تجهيز عرايس بالبيت والفندق – ${B.name}`,
+  desc: `ميك أب آرتست في عمّان بالبيت أو الفندق: مكياج عرايس ومرافقات، سهرات، سشوار وتسريحات، وكل خدمات التجميل مع فريق ${B.name} وخبيرة المكياج ${B.owner}. ${B.phoneHomeLocal}`,
+  eyebrow: 'عمّان · بيت أو فندق', h1: 'بنجيكِ لعمّان، وين ما كنتِ', h1Shine: 2,
+  lead: `ما في داعي تطلعي من بيتك أو فندقك: فريق ${B.name} بيوصلك لعمّان بكل خدماته، من مكياج العروس والمرافقات للسشوار والسهرات.`,
+  faq: [
+    ['هل بتجوا لعمّان؟', `نعم، الخدمة المنزلية والفندقية بتوصل لكل مناطق عمّان. للحجز ${B.phoneHomeLocal} (اتصال أو واتساب).`],
+    ['هل بتجهزوا العروس بالفندق بعمّان؟', 'نعم، تجهيز العروس والمرافقات بغرفة الفندق أو بالبيت، مع مدام براءة.'],
+    ['شو الخدمات المتوفرة بعمّان؟', 'كل خدمات السنتر: مكياج عرايس ومرافقات، سهرات وخطوبة، سشوار وتسريحات، وخدمات الشعر والبشرة والأظافر.'],
+    ['قديش لازم أحجز بدري؟', 'المواعيد محدودة شهرياً، خصوصاً بموسم الأعراس، فاحجزي بأبكر وقت.'],
+  ],
+  sections: `
+<section class="sec sec--light"><div class="wrap">
+  <div class="sec__head" data-reveal><span class="eyebrow">بعمّان</span><h2>شو منقدّم بعمّان؟</h2></div>
+  ${feats([['crown', 'عرايس بالفندق أو البيت', 'تجهيز العروس مع مدام براءة.'], ['heart', 'المرافقات', 'أهلك وصاحباتك بنفس المكان والوقت.'], ['sparkle', 'سهرات وخطوبة', 'مكياج وسشوار وتسريحات لأي مناسبة.'], ['home', 'كل خدمات السنتر', 'شعر وبشرة وأظافر بالبيت.']])}
+</div></section>
+${splitSec({ eyebrow: 'يوم العرس بالفندق', h: 'تجهيز بروقان بدون طريق', p: 'منوصل لغرفتك بالفندق قبل الموعد بوقت كافي، ومنجهّزك إنتِ والمرافقات بنفس المكان.', ticks: ['مكياج ثابت لآخر الليل', 'تسريحة وطرحة متكتكة', 'المرافقات بنفس الوقت'], imgId: 'ph:bride-veil', alt: 'عروس بالطرحة من أعمال مدام براءة', plum: true, wa: B.waHome, badge: '<b>عمّان</b>بيت أو فندق' })}
+${splitSec({ eyebrow: 'مش بس عمّان', h: 'منوصل لكل المملكة', p: `الخدمة المنزلية والفندقية بتوصل لـ${GOVS.join('، ')}.`, ticks: [`للحجز: ${B.phoneHomeLocal}`, 'المواعيد محدودة، احجزي بدري', `أو زورينا بالسنتر في ${B.city}`], imgId: 'ph:bride-companion', alt: 'عروس ومرافقتها من تجهيز براءة بيوتي سنتر', rev: true, wa: B.waHome })}`,
+});
+
 const courses = landing({
   path: '/makeup-courses/', crumb: 'دورات المكياج', hero: P.palette,
   title: `دورة مكياج في ${B.city} | دورات خاصة وماستر كلاس مع ${B.owner}`,
@@ -596,7 +691,7 @@ ${splitSec({ eyebrow: 'ليش مع براءة؟', h: 'خبرة حقيقية من
 const blogIndex = page({
   path: '/blog/', ogImg: P.cosmetics,
   title: `مدونة التجميل | نصائح مكياج وعرائس في الزرقاء وعمّان – ${B.name}`,
-  desc: `مدونة ${B.name}: أدلة ونصائح عن مكياج العرايس، اختيار أفضل صالون في الزرقاء، الخدمة المنزلية في عمّان، ودورات المكياج في الأردن.`,
+  desc: `مدونة ${B.name}: أدلة ونصائح عن مكياج العرايس، اختيار أفضل صالون في الزرقاء، الخدمة المنزلية بكل الأردن، ودورات المكياج في الأردن.`,
   schema: [{ '@type': 'Blog', '@id': `${SITE}/blog/#blog`, name: `مدونة ${B.name}`, url: `${SITE}/blog/`, inLanguage: 'ar-JO', publisher: { '@id': salonId },
     blogPost: posts.map(p => ({ '@type': 'BlogPosting', headline: p.title, url: `${SITE}/blog/${p.slug}/`, datePublished: p.date })) },
     crumbLD([['الرئيسية', '/'], ['المدونة', '/blog/']])],
@@ -690,7 +785,7 @@ const about = page({
   <span class="eyebrow">خبيرة مكياج · ${B.city}</span><h1>${words(B.owner + ' خبيرة العرائس', 1)}</h1>
   <p class="hero__lead">صاحبة ${B.name} في ${B.area}، وإيدها كانت بإطلالة أكثر من 1000 عروس.</p>
 </div></section>
-${splitSec({ eyebrow: 'مين براءة؟', h: 'خبرة بتبان بالتفاصيل', p: `${B.owner} خبيرة مكياج عرائس وصاحبة ${B.name} في ${B.city}. بتشتغل بنفسها على العرايس بالسنتر، وبتجهّز عرايس عمّان بالبيت أو الفندق، وبتعلّم المكياج بدورات خاصة وماستر كلاس.`, ticks: ['أكثر من 1000 عروس', 'مكياج عرائس وعروس الحنّة والمرافقات', 'سهرات وسشوار وتسريحات مع الطرحة', 'دورات خاصة وماستر كلاس'], imgId: 'ph:bride-pearls', alt: `مكياج عروس من أعمال ${B.owner}` })}
+${splitSec({ eyebrow: 'مين براءة؟', h: 'خبرة بتبان بالتفاصيل', p: `${B.owner} خبيرة مكياج عرائس وصاحبة ${B.name} في ${B.city}. بتشتغل بنفسها على العرايس بالسنتر، وبتجهّز العرايس بالبيت أو الفندق بكل المملكة، وبتعلّم المكياج بدورات خاصة وماستر كلاس.`, ticks: ['أكثر من 1000 عروس', 'مكياج عرائس وعروس الحنّة والمرافقات', 'سهرات وسشوار وتسريحات مع الطرحة', 'دورات خاصة وماستر كلاس'], imgId: 'ph:bride-pearls', alt: `مكياج عروس من أعمال ${B.owner}` })}
 <section class="sec sec--light"><div class="wrap">
   <div class="sec__head" data-reveal><span class="eyebrow">من أعمالها</span><h2>إطلالات بتحكي عن الشغل</h2></div>
   <div class="gallery">${WORK.slice(0, 6).map(([n, alt, cap]) => `<figure>${ph(n, alt, '(max-width:600px) 100vw, 33vw')}<figcaption>${cap}</figcaption></figure>`).join('')}</div>
@@ -730,7 +825,7 @@ const notFound = page({
 // ---------- write ----------
 rmSync(OUT, { recursive: true, force: true });
 const engage = engageDef();
-const pages = { '/': home, '/bridal-makeup/': bridal, '/makeup-artist/': mua, '/home-service/': homeSvc, '/makeup-courses/': courses, '/engagement-makeup/': engage, '/evening-makeup/': evening, '/hair-styling/': hair, '/henna-makeup/': henna, '/blog/': blogIndex, '/about-baraa/': about, '/reviews/': reviewsPage, ...Object.fromEntries(cats.map(c => [`/blog/${c.slug}/`, hubPage(c)])), ...Object.fromEntries(posts.map(p => [`/blog/${p.slug}/`, postPage(p)])) };
+const pages = { '/': home, '/bridal-makeup/': bridal, '/makeup-artist/': mua, '/home-service/': homeSvc, '/makeup-courses/': courses, '/engagement-makeup/': engage, '/evening-makeup/': evening, '/hair-styling/': hair, '/henna-makeup/': henna, '/amman-makeup-artist/': amman, ...Object.fromEntries(BEAUTY.map(x => [x.path, beautyPage(x)])), '/blog/': blogIndex, '/about-baraa/': about, '/reviews/': reviewsPage, ...Object.fromEntries(cats.map(c => [`/blog/${c.slug}/`, hubPage(c)])), ...Object.fromEntries(posts.map(p => [`/blog/${p.slug}/`, postPage(p)])) };
 for (const [p, html] of Object.entries(pages)) {
   mkdirSync(OUT + p, { recursive: true });
   writeFileSync(`${OUT}${p}index.html`, minify.html(rebase(html)));
@@ -771,7 +866,7 @@ writeFileSync(`${OUT}/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?>\n<ur
 writeFileSync(`${OUT}/site.webmanifest`, JSON.stringify({ name: B.name, short_name: 'براءة', lang: 'ar', dir: 'rtl', start_url: BASE + '/', display: 'standalone', background_color: '#120a0f', theme_color: '#120a0f', icons: [{ src: BASE + '/favicon.svg', sizes: 'any', type: 'image/svg+xml' }] }));
 writeFileSync(`${OUT}/llms.txt`, `# ${B.name} (${B.nameEn})
 
-> صالون تجميل نسائي في ${B.city}، ${B.area}، الأردن. خبيرة المكياج ${B.owner} (أكثر من 1000 عروس). مكياج عرائس وعروس الحنّة، سهرات، سشوار وتسريحات، خدمة منزلية، تجهيز عرايس عمّان بالبيت أو الفندق (فستان أبيض)، ودورات مكياج خاصة وماستر كلاس.
+> صالون تجميل نسائي في ${B.city}، ${B.area}، الأردن. خبيرة المكياج ${B.owner} (أكثر من 1000 عروس). مكياج عرائس وعروس الحنّة، سهرات، سشوار وتسريحات، خدمة منزلية، خدمة منزلية وفندقية بكل محافظات الأردن، ودورات مكياج خاصة وماستر كلاس.
 
 - المدينة: ${B.city}، الأردن
 - العنوان: ${B.area}، ${B.city}
@@ -785,7 +880,7 @@ writeFileSync(`${OUT}/llms.txt`, `# ${B.name} (${B.nameEn})
 - [الرئيسية](${SITE}/): نظرة عامة على الخدمات والحجز
 - [مكياج العرائس في ${B.city}](${SITE}/bridal-makeup/): باقة العروس وجلسة التجربة وتجهيز المرافقات
 - [ميك أب آرتست في ${B.city}](${SITE}/makeup-artist/): مكياج سهرات ومناسبات وتسريحات
-- [خدمة تجميل منزلية](${SITE}/home-service/): مكياج وسشوار في المنزل، وVIP لعرايس عمّان
+- [خدمة تجميل منزلية](${SITE}/home-service/): كل خدمات السنتر بالبيت أو الفندق بكل محافظات الأردن
 - [دورات المكياج](${SITE}/makeup-courses/): دورات خاصة وماستر كلاس
 - [مكياج خطوبة في ${B.city}](${SITE}/engagement-makeup/)
 - [عن ${B.owner}](${SITE}/about-baraa/): خبيرة المكياج وصاحبة السنتر
