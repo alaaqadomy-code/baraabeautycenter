@@ -49,6 +49,9 @@ const ph = (name, alt, sizes = '(max-width:900px) 100vw, 50vw', eager = false) =
   return `<img src="/photos/${name}-${w}.webp" srcset="${set}" sizes="${sizes}" width="${w}" height="${h}" alt="${alt}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
 };
 const img = (id, alt, opts = {}) => id.startsWith('ph:') ? ph(id.slice(3), alt, opts.sizes, opts.eager) : imgU(id, alt, opts);
+// post covers: real photo name, or 'u:<P key>' for an Unsplash image (every post gets a unique cover)
+const coverImg = (c, alt, sizes, eager = false) => c.startsWith('u:') ? imgU(P[c.slice(2)], alt, { sizes, eager }) : ph(c, alt, sizes, eager);
+const coverUrl = c => c.startsWith('u:') ? U(P[c.slice(2)], 1200, 1500) : `${SITE}/photos/${c}-${PH[c][0]}.webp`;
 const imgU = (id, alt, { ratio = 1.25, sizes = '(max-width:900px) 100vw, 50vw', eager = false, cls = '', widths = [480, 800, 1200] } = {}) => {
   const set = widths.map(w => `${U(id, w, Math.round(w * ratio))} ${w}w`).join(', ');
   const w = widths[1], h = Math.round(w * ratio);
@@ -378,7 +381,7 @@ const words = (txt, shineFrom = 99) => txt.split(' ').map((w, i) => `<span class
 
 const fmtDate = d => new Date(d).toLocaleDateString('ar-JO', { year: 'numeric', month: 'long', day: 'numeric' });
 const postCard = (p, i = 0) => `<a class="pcard" href="/blog/${p.slug}/" data-reveal style="--d:${i % 3}">
-  <div class="pcard__img">${ph(p.cover, p.title, '(max-width:700px) 100vw, 33vw')}</div>
+  <div class="pcard__img">${coverImg(p.cover, p.title, '(max-width:700px) 100vw, 33vw')}</div>
   <div class="pcard__body"><span class="tag">${p.tag}</span><h3>${p.title}</h3><p>${p.desc}</p><span class="pcard__more">اقرئي المقال ${I.arrow}</span></div></a>`;
 
 const faqBlock = (items, title = 'أسئلة شائعة', eyebrow = 'إجابات سريعة') => `<section class="sec sec--light" id="faq" aria-labelledby="faq-h">
@@ -821,10 +824,10 @@ const postPage = p => {
   const path = `/blog/${p.slug}/`;
   return page({
     path, ogImg: P.cosmetics, title: `${p.title} | ${B.name}`, desc: p.desc,
-    ogAbs: `${SITE}/photos/${p.cover}-${PH[p.cover][0]}.webp`,
+    ogAbs: coverUrl(p.cover),
     schema: [{ '@type': 'BlogPosting', '@id': `${SITE}${path}#post`, headline: p.title, description: p.summary || p.desc, inLanguage: 'ar-JO',
       datePublished: p.date, dateModified: p.updated || p.date, keywords: p.keywords.join('، '), articleSection: p.tag,
-      image: `${SITE}/photos/${p.cover}-${PH[p.cover][0]}.webp`, mainEntityOfPage: `${SITE}${path}`,
+      image: coverUrl(p.cover), mainEntityOfPage: `${SITE}${path}`,
       author: { '@type': 'Person', '@id': personId, name: B.owner, jobTitle: 'خبيرة مكياج', url: `${SITE}/about-baraa/` }, publisher: { '@id': salonId } },
       faqLD(p.faq), crumbLD([['الرئيسية', '/'], ['المدونة', '/blog/'], [p.cat.name, `/blog/${p.cat.slug}/`], [p.title, path]])],
     body: `
@@ -836,7 +839,7 @@ const postPage = p => {
   <p class="post-meta">بقلم <a href="/about-baraa/"><b>${B.owner}</b></a>، خبيرة مكياج · <time datetime="${p.date}">${fmtDate(p.date)}</time></p>
 </div></header>
 <div class="sec sec--light post"><div class="wrap post__grid">
-  <figure class="post__cover">${ph(p.cover, p.title, '(max-width:900px) 100vw, 380px', true)}</figure>
+  <figure class="post__cover">${coverImg(p.cover, p.title, '(max-width:900px) 100vw, 380px', true)}</figure>
   <div class="prose">${p.summary ? `<aside class="tldr" aria-label="الجواب المختصر"><b>الجواب المختصر</b><p>${p.summary}</p></aside>` : ''}${p.body}
     <h2>أسئلة شائعة</h2>
     ${p.faq.map(([q, a]) => `<h3>${q}</h3><p>${a}</p>`).join('')}
@@ -857,7 +860,7 @@ const hubPage = c => {
   const path = `/blog/${c.slug}/`;
   return page({
     path, ogImg: P.cosmetics, title: `${c.h1} | مدونة ${B.name}`, desc: c.intro.slice(0, 155),
-    ogAbs: `${SITE}/photos/${c.items[0].cover}-${PH[c.items[0].cover][0]}.webp`,
+    ogAbs: coverUrl(c.items[0].cover),
     schema: [{ '@type': 'CollectionPage', '@id': `${SITE}${path}#hub`, name: c.h1, description: c.intro, url: `${SITE}${path}`, inLanguage: 'ar-JO',
       isPartOf: { '@id': `${SITE}/blog/#blog` }, about: c.name, ...(c.pillar ? { relatedLink: SITE + c.pillar[0] } : {}),
       mainEntity: { '@type': 'ItemList', numberOfItems: c.items.length, itemListElement: c.items.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/blog/${p.slug}/`, name: p.title })) } },
