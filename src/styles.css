@@ -357,3 +357,16 @@ a.eyebrow{text-decoration:none}
   .sec .revs:has(+p){columns:auto;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;margin-inline:-16px;padding-inline:16px;scrollbar-width:none}
   .sec .revs:has(+p) .rev{flex:0 0 84%;scroll-snap-align:center;margin:0}
 }
+
+/* governorate hub (home-service) */
+.gtable{max-width:860px;margin:0 auto 48px;overflow-x:auto;border-radius:18px;border:1px solid rgba(243,220,176,.2)}
+.gtable table{width:100%;border-collapse:collapse;font-size:.95rem}
+.gtable th,.gtable td{padding:14px 16px;text-align:start;border-bottom:1px solid rgba(243,220,176,.12)}
+.gtable thead th{color:var(--gold-2);font-weight:600}
+.gtable td:nth-child(2),.gtable td:nth-child(3){color:var(--gold-2)}
+.gtable a{color:var(--gold-2);text-decoration:underline;text-underline-offset:3px}
+.gcities{display:grid;gap:40px;max-width:860px;margin-inline:auto}
+.gcity{scroll-margin-top:100px}
+.gcity h3{font-size:1.5rem;margin-bottom:10px}
+.gcity .faq{margin-top:18px}
+.gcity .faq summary{color:var(--ink)}

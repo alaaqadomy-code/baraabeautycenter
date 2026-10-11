@@ -19,7 +19,7 @@ export const cats = [
     posts: ['makeup-artist-zarqa', 'soft-glam-vs-smoky-makeup', 'hijab-evening-makeup-zarqa', 'graduation-makeup-zarqa', 'eid-makeup-ideas', 'makeup-mistakes-evening'] },
   { slug: 'home-service', name: 'الخدمة المنزلية', pillar: ['/home-service/', 'خدمة التجميل المنزلية'],
     h1: 'خدمة التجميل المنزلية والفنادق',
-    intro: 'متى تكون الخدمة المنزلية أريح من الصالون، شو بتشمل، وكيف بتشتغل خدمة العرايس بالبيت أو الفندق بعمّان وكل محافظات المملكة.',
+    intro: 'متى تكون الخدمة المنزلية أريح من الصالون، شو بتشمل، وكيف بتشتغل خدمة العرايس بالبيت أو الفندق بعمّان وإربد والسلط ومادبا وجرش وعجلون والمفرق.',
     posts: ['home-beauty-service-zarqa', 'makeup-artist-amman-home-hotel', 'home-beauty-service-jordan'] },
   { slug: 'courses', name: 'دورات المكياج', pillar: ['/makeup-courses/', 'دورات المكياج في الزرقاء'],
     h1: 'تعلّمي المكياج واشتغلي فيه',
