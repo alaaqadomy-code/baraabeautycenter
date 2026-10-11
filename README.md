@@ -4,4 +4,4 @@
 
 - التعديل: `build.mjs` (المحتوى والصفحات) و `src/` (CSS/JS)
 - البناء: `SITE_URL=https://your-domain node build.mjs` ← الناتج في `docs/`
-- النشر: GitHub Pages من مجلد `docs/` (أو Vercel/Netlify بنفس المجلد كـ output)
+- النشر: Cloudflare Pages ← build `node build.mjs`, output `docs`، الدومين https://baraabeautycenter.com (الافتراضي في build.mjs). نسخة github.io تحوّل تلقائيًا للدومين.

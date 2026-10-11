@@ -13,7 +13,7 @@ import { createHash } from 'node:crypto';
 const ver = f => createHash('md5').update(readFileSync(f)).digest('hex').slice(0, 8); // cache-busting
 const V_CSS = ver('src/styles.css'), V_JS = ver('src/main.js');
 
-const SITE = (process.env.SITE_URL || 'https://idresalalaree-debug.github.io/baraa-beauty-center').replace(/\/$/, '');
+const SITE = (process.env.SITE_URL || 'https://baraabeautycenter.com').replace(/\/$/, '');
 const OUT = 'docs';
 const BASE = new URL(SITE).pathname.replace(/\/$/, ''); // '' on custom domain, '/repo' on GitHub project pages
 const rebase = h => h.replace(/(href|src)="\/(?!\/)/g, `$1="${BASE}/`);
@@ -253,6 +253,7 @@ const page = ({ path, title, desc, ogImg, ogAbs, lcp, preload = '', body, schema
 <html lang="ar-JO" dir="rtl">
 <head>
 <meta charset="utf-8">
+<script>if(location.hostname.endsWith('github.io'))location.replace('https://baraabeautycenter.com'+location.pathname.replace('/baraa-beauty-center','')+location.search+location.hash)</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>${title}</title>
 <meta name="description" content="${desc}">
