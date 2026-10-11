@@ -16,6 +16,8 @@ const V_CSS = ver('src/styles.css'), V_JS = ver('src/main.js');
 const SITE = (process.env.SITE_URL || 'https://baraabeautycenter.com').replace(/\/$/, '');
 const OUT = 'docs';
 const BASE = new URL(SITE).pathname.replace(/\/$/, ''); // '' on custom domain, '/repo' on GitHub project pages
+// critical path: CSS inlined (removes the render-blocking request); font URLs made root-absolute
+const CSS_INLINE = minify.css(readFileSync('src/fonts.css', 'utf8') + readFileSync('src/styles.css', 'utf8')).replace(/url\(fonts\//g, `url(${BASE}/fonts/`);
 const rebase = h => h.replace(/(href|src)="\/(?!\/)/g, `$1="${BASE}/`);
 const TODAY = new Date().toISOString().slice(0, 10);
 import { execSync } from 'node:child_process';
@@ -272,7 +274,7 @@ ${ogAbs ? '' : '<meta property="og:image:width" content="1200"><meta property="o
 <link rel="preload" href="/fonts/ibm-plex-sans-arabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/fonts/el-messiri-500-arabic.woff2" as="font" type="font/woff2" crossorigin>
 ${lcp ? `<link rel="preload" as="image" media="(max-width:900px)" imagesrcset="${U(lcp, 640, 1024)} 640w, ${U(lcp, 1080, 1728)} 1080w" imagesizes="100vw" fetchpriority="high">
 <link rel="preload" as="image" media="(min-width:901px)" imagesrcset="${U(lcp, 1600, 992)} 1600w, ${U(lcp, 2200, 1364)} 2200w" imagesizes="100vw" fetchpriority="high">` : ''}
-${preload}<link rel="stylesheet" href="/styles.css?v=${V_CSS}">
+${preload}<style>${CSS_INLINE}</style>
 ${ld(path, schema)}
 </head>
 <body>
