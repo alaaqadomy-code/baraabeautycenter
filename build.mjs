@@ -172,10 +172,43 @@ const BEAUTY = [
 // Zarqa neighbourhoods the salon serves (one section, not doorway pages)
 const AREAS = ['الزرقاء الجديدة', 'الرصيفة', 'الهاشمية', 'ضاحية الأمير حسن', 'جبل طارق', 'عوجان', 'بيرين', 'حي معصوم', 'الغويرية', 'شبيب', 'حي الأمير محمد'];
 const GOVS = ['عمّان', 'الزرقاء', 'إربد', 'السلط', 'مادبا', 'المفرق', 'جرش', 'عجلون', 'الكرك', 'الطفيلة', 'معان', 'العقبة'];
+// Governorate home-service pages: real service (confirmed 2026-10-11); each keeps its own copy, not swapped names
+const CITIES = [
+  { slug: 'irbid', name: 'إربد', en: 'Irbid',
+    lead: 'عرسك أو مناسبتك بإربد؟ فريق براءة بيوتي سنتر بيوصلك لبيتك أو قاعتك أو فندقك بإربد، بكل خدمات السنتر.',
+    intro: 'كتير من عرايس الشمال بيسألونا إذا منوصل لإربد. الجواب نعم: منجي لعندك بيوم العرس أو الحنّة أو الخطوبة، ومنجهّزك إنتِ والمرافقات بنفس المكان، بدل ما تقطعي الطريق للزرقاء.',
+    faq: [['هل بتجوا لإربد يوم العرس؟', `نعم، تجهيز العروس والمرافقات بالبيت أو الفندق بإربد. للحجز ${B.phoneHomeLocal}.`], ['قديش لازم أحجز بدري لإربد؟', 'المواعيد خارج الزرقاء بتحتاج تنسيق أكثر للوقت والطريق، فاحجزي بأبكر وقت ممكن، خصوصاً بموسم الأعراس.'], ['هل بتعملوا كمان سشوار وسهرات بإربد؟', 'نعم، كل خدمات السنتر: مكياج سهرة، سشوار وتسريحات، وخدمات الشعر والبشرة.']] },
+  { slug: 'salt', name: 'السلط', en: 'Salt',
+    lead: 'من السلط؟ بنجيكِ عالبيت أو الفندق بكل خدمات السنتر، من العروس للمرافقات للسهرات.',
+    intro: 'بالسلط كتير من المناسبات بتكون ببيت العيلة. هون بتفرق الخدمة المنزلية: منجي لبيت العروس ومنجهّز العروس وأهلها وصاحباتها بنفس الجلسة، وكل وحدة بتطلع جاهزة على وقتها.',
+    faq: [['هل بتجوا للسلط؟', `نعم، الخدمة المنزلية والفندقية بتوصل للسلط. للحجز ${B.phoneHomeLocal}.`], ['هل بتجهزوا أهل العروس ببيتها؟', 'نعم، العروس والمرافقات بنفس المكان، ومنرتب الدور حسب وقت كل وحدة.'], ['شو بتحتاجي تجهزي بالبيت قبل ما نوصل؟', 'غرفة فيها إضاءة منيحة وطاولة وكرسي ومراية، وبس. الأدوات والمنتجات علينا.']] },
+  { slug: 'madaba', name: 'مادبا', en: 'Madaba',
+    lead: 'مناسبتك بمادبا؟ منوصلك بالمكياج والسشوار وتجهيز العروس، بالبيت أو بالفندق.',
+    intro: 'مادبا قريبة من عمّان، وكتير من عرايسها بيتجهزوا بالبيت أو بفندق قريب. منجي لعندك بنفس جودة السنتر وأدوات معقّمة، ومنخطط الوقت عشان تكوني جاهزة قبل التصوير.',
+    faq: [['هل بتجوا لمادبا؟', `نعم، للحجز ${B.phoneHomeLocal} (اتصال أو واتساب).`], ['هل بتلحقوا قبل جلسة التصوير؟', 'منرتب موعد الوصول حسب موعد التصوير والزفة، فخبرينا بالبرنامج وقت الحجز.'], ['هل الخدمة بتشمل المرافقات؟', 'نعم، العروس والمرافقات وأم العروس.']] },
+  { slug: 'aqaba', name: 'العقبة', en: 'Aqaba',
+    lead: 'عرسك بفندق بالعقبة؟ فريق براءة بيوتي سنتر بيوصلك لغرفتك بالفندق بكل تجهيزات العروس.',
+    intro: 'إذا عرسك أو حفلتك بالعقبة، أصعب إشي إنك تلاقي ميك أب آرتست بتعرفيها وبتثقي بشغلها. منسافر لعندك ومنجهّزك بغرفة الفندق، ومعنا كل الأدوات والمنتجات، عشان ما تنشغلي بإشي غير فرحتك.',
+    faq: [['هل بتسافروا للعقبة؟', `نعم، الخدمة بتوصل للعقبة. لأنها بعيدة، تواصلي معنا بدري على ${B.phoneHomeLocal} لنرتب الموعد.`], ['هل بتجهزوا العروس بغرفة الفندق؟', 'نعم، تجهيز العروس والمرافقات بغرفة الفندق.'], ['كيف بنرتب الموعد للعقبة؟', 'خبرينا بتاريخ العرس واسم الفندق وعدد المرافقات، ومنرتب معك الوقت والتفاصيل.']] },
+];
+const cityPage = c => landing({
+  path: `/home-service/${c.slug}/`, crumb: `خدمة منزلية في ${c.name}`, hero: P.mua2, also: ['home-service'],
+  title: `خدمة تجميل منزلية في ${c.name} | ميك أب آرتست وتجهيز عرايس بالبيت – ${B.name}`,
+  desc: `ميك أب آرتست وخدمة تجميل منزلية في ${c.name}: تجهيز العروس والمرافقات بالبيت أو الفندق، سهرات، سشوار وتسريحات، مع فريق ${B.name}. ${B.phoneHomeLocal}`,
+  eyebrow: `${c.name} · بيت أو فندق`, h1: `بنجيكِ لـ${c.name}`, h1Shine: 1, lead: c.lead, faq: c.faq,
+  sections: `
+<section class="sec sec--light"><div class="wrap">
+  <div class="sec__head" data-reveal><span class="eyebrow">${c.name}</span><h2>الخدمة المنزلية في ${c.name}</h2><p class="muted">${c.intro}</p></div>
+  ${feats([['crown', 'العروس', 'مكياج وتسريحة وطرحة مع مدام براءة.'], ['heart', 'المرافقات', 'أهلك وصاحباتك بنفس المكان.'], ['sparkle', 'سهرات وخطوبة', 'مكياج وسشوار لأي مناسبة.'], ['home', 'بيت أو فندق', 'وين ما كانت مناسبتك.']])}
+</div></section>
+${splitSec({ eyebrow: 'كيف بنحجز؟', h: 'ثلاث خطوات', p: `اتصلي أو راسلينا واتساب على ${B.phoneHomeLocal}، وخبرينا بالتاريخ والمكان بـ${c.name} وعدد المرافقات.`, ticks: ['منأكد الموعد ووقت الوصول', 'منجيب كل الأدوات والمنتجات', 'المواعيد محدودة، احجزي بدري'], imgId: 'ph:bride-companion', alt: 'عروس ومرافقتها من تجهيز براءة بيوتي سنتر', plum: true, wa: B.waHome, badge: `<b>${c.name}</b>بيت أو فندق` })}`,
+});
+const cityLinks = () => CITIES.map(c => `<a href="/home-service/${c.slug}/" style="color:var(--gold-2)">${c.name}</a>`).join('، ');
+
 const areasSec = () => `<section class="sec" aria-labelledby="areas-h"><div class="wrap">
   <div class="sec__head center" data-reveal><span class="eyebrow">مناطق الخدمة</span><h2 id="areas-h">من وين بتجينا؟</h2>
   <p class="muted">السنتر في ${B.area} بالزرقاء، وزبوناتنا بيجوا من كل أحياء المدينة: ${AREAS.join('، ')}. وإذا ما بدك تطلعي من البيت، منجيكِ لعندك.</p></div>
-  <p class="muted" style="text-align:center;max-width:62ch;margin:0 auto">الخدمة المنزلية والفندقية بتوصل لـ${GOVS.join('، ')}. <a href="/home-service/" style="color:var(--gold-2)">تفاصيل الخدمة المنزلية</a> · <a href="/amman-makeup-artist/" style="color:var(--gold-2)">الخدمة بعمّان</a> · <a href="${B.maps}" target="_blank" rel="noopener" style="color:var(--gold-2)">موقع السنتر على الخريطة</a></p>
+  <p class="muted" style="text-align:center;max-width:62ch;margin:0 auto">الخدمة المنزلية والفندقية بتوصل لـ${GOVS.join('، ')}. <a href="/home-service/" style="color:var(--gold-2)">تفاصيل الخدمة المنزلية</a> · ${cityLinks()} · <a href="/amman-makeup-artist/" style="color:var(--gold-2)">الخدمة بعمّان</a> · <a href="${B.maps}" target="_blank" rel="noopener" style="color:var(--gold-2)">موقع السنتر على الخريطة</a></p>
 </div></section>`;
 const beautySec = () => `<section class="sec sec--light" aria-labelledby="beauty-h"><div class="wrap">
   <div class="sec__head center" data-reveal><span class="eyebrow">شعر · بشرة · أظافر</span><h2 id="beauty-h">كل اللي بتحتاجيه بمكان واحد</h2></div>
@@ -268,6 +301,8 @@ const footer = () => `<footer class="ftr"><div class="wrap">
       <li><a href="/hair-styling/">سشوار وتسريحات في ${B.city}</a></li>
       <li><a href="/henna-makeup/">مكياج عروس الحنّة</a></li>
       <li><a href="/amman-makeup-artist/">ميك أب آرتست في عمّان</a></li>
+      ${CITIES.map(c => `<li><a href="/home-service/${c.slug}/">خدمة منزلية في ${c.name}</a></li>`).join('')}
+      <li><a href="/en/" lang="en">English</a></li>
       ${BEAUTY.map(x => `<li><a href="${x.path}">${x.crumb} في ${B.city}</a></li>`).join('\n      ')}
       <li><a href="/reviews/">آراء الزبونات</a></li>
       <li><a href="/makeup-courses/">دورات المكياج</a></li>
@@ -313,9 +348,9 @@ const postCard = (p, i = 0) => `<a class="pcard" href="/blog/${p.slug}/" data-re
   <div class="pcard__img">${ph(p.cover, p.title, '(max-width:700px) 100vw, 33vw')}</div>
   <div class="pcard__body"><span class="tag">${p.tag}</span><h3>${p.title}</h3><p>${p.desc}</p><span class="pcard__more">اقرئي المقال ${I.arrow}</span></div></a>`;
 
-const faqBlock = (items, title = 'أسئلة شائعة') => `<section class="sec sec--light" id="faq" aria-labelledby="faq-h">
+const faqBlock = (items, title = 'أسئلة شائعة', eyebrow = 'إجابات سريعة') => `<section class="sec sec--light" id="faq" aria-labelledby="faq-h">
   <div class="wrap">
-    <div class="sec__head center" data-reveal><span class="eyebrow">إجابات سريعة</span><h2 id="faq-h">${title}</h2></div>
+    <div class="sec__head center" data-reveal><span class="eyebrow">${eyebrow}</span><h2 id="faq-h">${title}</h2></div>
     <div class="faq">${items.map(([q, a], i) => `<details data-reveal style="--d:${i}"${i === 0 ? ' open' : ''}><summary>${q}</summary><div class="ans"><p>${a}</p></div></details>`).join('')}</div>
   </div></section>`;
 
@@ -353,19 +388,20 @@ const crumbLD = list => ({ '@type': 'BreadcrumbList', itemListElement: list.map(
 const serviceLD = (name, desc, path) => ({ '@type': 'Service', name, description: desc, serviceType: name, provider: { '@id': salonId }, areaServed: { '@type': 'City', name: B.city }, url: SITE + path });
 
 // ---------- page shell ----------
-const page = ({ path, title, desc, ogImg, ogAbs, lcp, preload = '', body, schema = [] }) => `<!doctype html>
-<html lang="ar-JO" dir="rtl">
+const HREFLANG = { '/': '/en/', '/en/': '/' };
+const page = ({ path, title, desc, ogImg, ogAbs, lcp, preload = '', body, schema = [], en = false }) => `<!doctype html>
+<html lang="${en ? 'en' : 'ar-JO'}" dir="${en ? 'ltr' : 'rtl'}">
 <head>
 <meta charset="utf-8">
 <script>if(location.hostname.endsWith('github.io'))location.replace('https://baraabeautycenter.com'+location.pathname.replace('/baraa-beauty-center','')+location.search+location.hash)</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>${title}</title>
 <meta name="description" content="${desc}">
-<link rel="canonical" href="${SITE}${path}">
+<link rel="canonical" href="${SITE}${path}">${HREFLANG[path] ? `\n<link rel="alternate" hreflang="${en ? 'ar' : 'en'}" href="${SITE}${HREFLANG[path]}"><link rel="alternate" hreflang="${en ? 'en' : 'ar'}" href="${SITE}${path}"><link rel="alternate" hreflang="x-default" href="${SITE}/">` : ''}
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="theme-color" content="#120a0f">
 <meta name="geo.region" content="JO-AZ"><meta name="geo.placename" content="${B.city}"><meta name="geo.position" content="${B.geo.lat};${B.geo.lng}"><meta name="ICBM" content="${B.geo.lat}, ${B.geo.lng}">
-<meta property="og:type" content="website"><meta property="og:locale" content="ar_JO"><meta property="og:site_name" content="${B.name}">
+<meta property="og:type" content="website"><meta property="og:locale" content="${en ? 'en_US' : 'ar_JO'}"><meta property="og:site_name" content="${B.name}">
 <meta property="og:title" content="${title}"><meta property="og:description" content="${desc}">
 <meta property="og:url" content="${SITE}${path}"><meta property="og:image" content="${ogAbs || U(ogImg, 1200, 630)}">
 ${ogAbs ? '' : '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">'}
@@ -380,9 +416,9 @@ ${preload}<style>${CSS_INLINE}</style>
 ${ld(path, schema)}
 </head>
 <body>
-${header(path)}
+${en ? `<div lang="ar" dir="rtl">${header(path)}</div>` : header(path)}
 <main id="main">${body}</main>
-${footer()}
+${en ? `<div lang="ar" dir="rtl">${footer()}</div>` : footer()}
 <script src="/main.js?v=${V_JS}" defer></script>
 </body>
 </html>`;
@@ -569,7 +605,8 @@ const homeSvc = landing({
   <div class="sec__head" data-reveal><span class="eyebrow">كيف بتشتغل الخدمة؟</span><h2>ثلاث خطوات وبنكون عندك</h2></div>
   ${feats([['wa', 'تواصلي معنا', `اتصلي أو راسلينا واتساب على ${B.phoneHomeLocal}.`], ['clock', 'نأكد الموعد', 'المواعيد محدودة شهرياً، فاحجزي بدري.'], ['home', 'بنوصل لعندك', 'لبيتك أو غرفتك بالفندق، بعمّان وكل محافظات المملكة.']])}
 </div></section>
-${splitSec({ eyebrow: 'شو بنقدّم بالبيت؟', h: 'تجربة الصالون كاملة', p: 'لا داعي للانتظار أو عناء الطريق.', ticks: ['سشوار وفير وتصفيف شعر لجميع المناسبات', 'ميك أب احترافي يبرز جمالك الطبيعي', 'تجهيز العروس والمرافقات', 'بروتين وصبغة وأظافر ورموش وحواجب وتنظيف بشرة وحلاوة'], imgId: P.hair2, alt: 'تسريحة شعر في المنزل', plum: true, wa: B.waHome, badge: '<b>VIP</b>عرايس عمّان: بيت أو فندق' })}`,
+${splitSec({ eyebrow: 'شو بنقدّم بالبيت؟', h: 'تجربة الصالون كاملة', p: 'لا داعي للانتظار أو عناء الطريق.', ticks: ['سشوار وفير وتصفيف شعر لجميع المناسبات', 'ميك أب احترافي يبرز جمالك الطبيعي', 'تجهيز العروس والمرافقات', 'بروتين وصبغة وأظافر ورموش وحواجب وتنظيف بشرة وحلاوة'], imgId: P.hair2, alt: 'تسريحة شعر في المنزل', plum: true, wa: B.waHome, badge: '<b>VIP</b>بيت أو فندق بكل المملكة' })}
+<section class="sec"><div class="wrap"><div class="sec__head center" data-reveal><span class="eyebrow">بكل المملكة</span><h2>منوصل لمحافظتك</h2><p class="muted">الخدمة المنزلية والفندقية بتوصل لـ${GOVS.join('، ')}. تفاصيل حسب المدينة: <a href="/amman-makeup-artist/" style="color:var(--gold-2)">عمّان</a>، ${cityLinks()}.</p></div></div></section>`,
 });
 
 const faqEngage = [
@@ -670,6 +707,40 @@ const amman = landing({
 </div></section>
 ${splitSec({ eyebrow: 'يوم العرس بالفندق', h: 'تجهيز بروقان بدون طريق', p: 'منوصل لغرفتك بالفندق قبل الموعد بوقت كافي، ومنجهّزك إنتِ والمرافقات بنفس المكان.', ticks: ['مكياج ثابت لآخر الليل', 'تسريحة وطرحة متكتكة', 'المرافقات بنفس الوقت'], imgId: 'ph:bride-veil', alt: 'عروس بالطرحة من أعمال مدام براءة', plum: true, wa: B.waHome, badge: '<b>عمّان</b>بيت أو فندق' })}
 ${splitSec({ eyebrow: 'مش بس عمّان', h: 'منوصل لكل المملكة', p: `الخدمة المنزلية والفندقية بتوصل لـ${GOVS.join('، ')}.`, ticks: [`للحجز: ${B.phoneHomeLocal}`, 'المواعيد محدودة، احجزي بدري', `أو زورينا بالسنتر في ${B.city}`], imgId: 'ph:bride-companion', alt: 'عروس ومرافقتها من تجهيز براءة بيوتي سنتر', rev: true, wa: B.waHome })}`,
+});
+
+const faqEn = [
+  ['Where is Baraa Beauty Center?', `In Zarqa, Jordan (Dahiyat Al-Madina Al-Munawwara). Salon phone: ${B.phoneLocal}.`],
+  ['Do you offer home or hotel service?', `Yes. Brides, bridesmaids and every salon service at your home or hotel room, in Amman, Zarqa and all governorates of Jordan. Home service: ${B.phoneHomeLocal} (call or WhatsApp).`],
+  ['Who does the bridal makeup?', `${B.owner} (Bara'a Ali), the salon's owner and makeup artist, who has prepared more than 1,000 brides.`],
+  ['Do you speak English?', 'Message us on WhatsApp in English or Arabic and we will arrange your booking.'],
+];
+const en = page({
+  path: '/en/', en: true, lcp: P.bride,
+  title: `Makeup Artist & Beauty Salon in Zarqa, Jordan | ${B.nameEn}`,
+  desc: `${B.nameEn}: women's beauty salon and bridal makeup artist in Zarqa, Jordan. Bridal, evening and henna makeup, hair styling, keratin, nails, lashes and facials. Home and hotel service across Jordan.`,
+  schema: [faqLD(faqEn), { '@type': 'WebPage', '@id': `${SITE}/en/#page`, url: `${SITE}/en/`, inLanguage: 'en', name: `Makeup Artist & Beauty Salon in Zarqa`, about: { '@id': salonId } }],
+  body: `
+<section class="hero hero--page" aria-labelledby="h1">
+  ${heroMedia([[P.bride, 'Bridal makeup by Baraa Beauty Center']])}
+  <div class="wrap">
+    <span class="eyebrow">Zarqa · Jordan</span>
+    <h1 id="h1">${words('Makeup Artist & Beauty Salon in Zarqa', 3)}</h1>
+    <p class="hero__lead">Bridal makeup by ${"Bara'a Ali"}, with more than 1,000 brides. We also do evening looks, hair styling and beauty care, at our salon in Zarqa or at your home or hotel anywhere in Jordan.</p>
+    <div class="hero__cta"><a class="btn" href="${B.wa}" target="_blank" rel="noopener">${I.wa}Book on WhatsApp</a> <a class="btn btn--ghost" href="tel:${B.phone}">${I.phone}<span dir="ltr">${B.phoneLocal}</span></a></div>
+  </div>
+</section>
+<section class="sec sec--light"><div class="wrap">
+  <div class="sec__head" data-reveal><span class="eyebrow">Services</span><h2>Everything in one place</h2></div>
+  ${feats([['crown', 'Bridal makeup', 'Bride, henna night, engagement and bridesmaids, with Madam Bara\'a.'], ['sparkle', 'Evening makeup', 'Soft glam to full glam, including hijab-friendly looks.'], ['heart', 'Hair', 'Blow-dry, styling, colour and protein/keratin.'], ['shield', 'Beauty care', 'Nails, lashes, brows, facials and halawa (sugaring).']])}
+</div></section>
+<section class="sec"><div class="wrap">
+  <div class="sec__head center" data-reveal><span class="eyebrow">Home & hotel service</span><h2>We come to you</h2>
+  <p class="muted">Getting ready at home or in your hotel room? Our team travels to Amman, Zarqa, Irbid, Salt, Madaba, Aqaba and every governorate in Jordan, with all tools and products. Home service: <a href="tel:${B.phoneHome}" dir="ltr" style="color:var(--gold-2)">${B.phoneHomeLocal}</a>.</p></div>
+  <p style="text-align:center"><a class="btn" href="${B.waHome}" target="_blank" rel="noopener">${I.wa}WhatsApp home service</a> <a class="btn btn--ghost" href="${B.maps}" target="_blank" rel="noopener">Salon on Google Maps</a></p>
+</div></section>
+${faqBlock(faqEn, 'Frequently asked questions', 'Quick answers')}
+<section class="sec"><div class="wrap" style="text-align:center"><p class="muted">Most of our site is in Arabic: <a href="/" style="color:var(--gold-2)">النسخة العربية</a></p></div></section>`,
 });
 
 const courses = landing({
@@ -825,7 +896,7 @@ const notFound = page({
 // ---------- write ----------
 rmSync(OUT, { recursive: true, force: true });
 const engage = engageDef();
-const pages = { '/': home, '/bridal-makeup/': bridal, '/makeup-artist/': mua, '/home-service/': homeSvc, '/makeup-courses/': courses, '/engagement-makeup/': engage, '/evening-makeup/': evening, '/hair-styling/': hair, '/henna-makeup/': henna, '/amman-makeup-artist/': amman, ...Object.fromEntries(BEAUTY.map(x => [x.path, beautyPage(x)])), '/blog/': blogIndex, '/about-baraa/': about, '/reviews/': reviewsPage, ...Object.fromEntries(cats.map(c => [`/blog/${c.slug}/`, hubPage(c)])), ...Object.fromEntries(posts.map(p => [`/blog/${p.slug}/`, postPage(p)])) };
+const pages = { '/': home, '/bridal-makeup/': bridal, '/makeup-artist/': mua, '/home-service/': homeSvc, '/makeup-courses/': courses, '/engagement-makeup/': engage, '/evening-makeup/': evening, '/hair-styling/': hair, '/henna-makeup/': henna, '/amman-makeup-artist/': amman, '/en/': en, ...Object.fromEntries(CITIES.map(c => [`/home-service/${c.slug}/`, cityPage(c)])), ...Object.fromEntries(BEAUTY.map(x => [x.path, beautyPage(x)])), '/blog/': blogIndex, '/about-baraa/': about, '/reviews/': reviewsPage, ...Object.fromEntries(cats.map(c => [`/blog/${c.slug}/`, hubPage(c)])), ...Object.fromEntries(posts.map(p => [`/blog/${p.slug}/`, postPage(p)])) };
 for (const [p, html] of Object.entries(pages)) {
   mkdirSync(OUT + p, { recursive: true });
   writeFileSync(`${OUT}${p}index.html`, minify.html(rebase(html)));
