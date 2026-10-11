@@ -3,6 +3,7 @@ import { mkdirSync, writeFileSync, copyFileSync, rmSync, readFileSync, readdirSy
 import { minify } from './minify.mjs';
 import { posts } from './content/blog.mjs';
 import { cats } from './content/categories.mjs';
+import { reviews } from './content/reviews.mjs';
 // attach each post to its cluster; fail loudly on orphans/duplicates
 const catBySlug = {};
 for (const c of cats) for (const s of c.posts) { if (catBySlug[s]) throw new Error('dup cluster: ' + s); catBySlug[s] = c; }
@@ -95,6 +96,14 @@ const services = [
 ];
 
 const WORK = [
+  ['bride-tiara', 'عروس بتسريحة مرفوعة وتاج فضي', 'عروس · تسريحة مع تاج'],
+  ['hijab-black', 'مكياج سهرة ناعم مع حجاب أسود', 'سهرة · حجاب'],
+  ['bride-companion', 'عروس ومرافقتها من تجهيز السنتر', 'عروس ومرافقة'],
+  ['glow-glam', 'مكياج جلو برونزي مع رموش', 'جلو برونزي'],
+  ['hijab-duo', 'مكياج مرافقات مع حجاب أبيض', 'مرافقات'],
+  ['bride-bow', 'عروس بلوك ناعم وفيونكة', 'عروس · لوك ناعم'],
+  ['waves-glam', 'سهرة مع شعر ويفي طويل', 'سهرة · ويفي'],
+  ['hijab-pink', 'مكياج طبيعي مع حجاب وردي', 'لوك ناعم · حجاب'],
   ['bride-pearls', 'عروس بطرحة اللؤلؤ ومكياج ناعم', 'عروس · طرحة لؤلؤ'],
   ['cateye-glam', 'مكياج آيلاينر مجنّح مع حجاب', 'آيلاينر مجنّح'],
   ['henna-bride', 'عروس الحنة بالثوب المطرّز', 'عروس الحنّة'],
@@ -105,6 +114,15 @@ const WORK = [
   ['hijab-glam', 'مكياج سهرة مع حجاب أبيض', 'سهرة · حجاب'],
   ['natural-glam', 'مكياج طبيعي من فريق السنتر', 'لوك طبيعي'],
 ];
+
+// ---------- client reviews (verbatim, content/reviews.mjs) ----------
+const revCard = r => `<figure class="rev" data-reveal><blockquote>${r.t}</blockquote><figcaption>${r.svc ? `<b>${r.svc}</b>` : ''}<span>${r.i ? `${r.i}. · ` : ''}عبر ${r.via} · ${r.date.slice(0, 4)}</span></figcaption></figure>`;
+const REV_HOME = [2, 18, 16, 1, 6, 22].map(i => reviews[i]).filter(Boolean);
+const revSec = (list, more = true) => `<section class="sec" aria-labelledby="rev-h"><div class="wrap">
+  <div class="sec__head center" data-reveal><span class="eyebrow">آراء زبوناتنا</span><h2 id="rev-h">كلامهن، مش كلامنا</h2><p class="muted">رسائل حقيقية من زبونات السنتر، منقولة بالحرف من <a href="${B.ig}" target="_blank" rel="noopener" style="color:var(--gold-2)">هايلايت "فيد باك" على إنستغرام</a> وتوصيات فيسبوك.</p></div>
+  <div class="revs">${list.map(revCard).join('')}</div>
+  ${more ? `<p style="text-align:center;margin-top:36px"><a class="btn btn--ghost" href="/reviews/">كل الآراء (${reviews.length}) ${I.arrow}</a> <a class="btn btn--ghost" href="${B.maps}" target="_blank" rel="noopener">تقييمات جوجل</a></p>` : ''}
+</div></section>`;
 
 // ---------- FAQ banks ----------
 const faqHome = [
@@ -168,6 +186,7 @@ const footer = () => `<footer class="ftr"><div class="wrap">
       <li><a href="/makeup-artist/">ميك أب آرتست في ${B.city}</a></li>
       <li><a href="/home-service/">خدمة تجميل منزلية</a></li>
       <li><a href="/engagement-makeup/">مكياج خطوبة في ${B.city}</a></li>
+      <li><a href="/reviews/">آراء الزبونات</a></li>
       <li><a href="/makeup-courses/">دورات المكياج</a></li>
       <li><a href="/blog/">مدونة التجميل</a></li>
       <li><a href="/about-baraa/">عن ${B.owner}</a></li>
@@ -365,10 +384,12 @@ const home = page({
 <section class="sec sec--plum" id="work" aria-labelledby="gal-h">
   <div class="wrap">
     <div class="sec__head center" data-reveal><span class="eyebrow">من أعمالنا</span><h2 id="gal-h">إطلالات حقيقية من براءة بيوتي سنتر</h2><p class="muted">كل صورة هون من شغل مدام براءة وفريق السنتر. المزيد على <a href="${B.ig}" target="_blank" rel="noopener" style="color:var(--gold-2)">إنستغرام</a>.</p></div>
-    <div class="gallery">${WORK.map(([n, alt, cap]) => `<figure>${ph(n, alt, '(max-width:600px) 100vw, 33vw')}<figcaption>${cap}</figcaption></figure>`).join('')}</div>
+    <div class="gallery">${WORK.slice(0, 12).map(([n, alt, cap]) => `<figure>${ph(n, alt, '(max-width:600px) 100vw, 33vw')}<figcaption>${cap}</figcaption></figure>`).join('')}</div>
     <p style="text-align:center;margin-top:40px"><a class="btn btn--ghost" href="${B.ig}" target="_blank" rel="noopener">${I.ig}شوفي كل أعمالنا</a></p>
   </div>
 </section>
+
+${revSec(REV_HOME)}
 
 <section class="sec sec--light" aria-labelledby="why-h">
   <div class="wrap">
@@ -612,6 +633,25 @@ ${splitSec({ eyebrow: 'مين براءة؟', h: 'خبرة بتبان بالتف�
 ${ctaBlock()}`,
 });
 
+const reviewsPage = page({
+  path: '/reviews/', ogImg: P.cosmetics, ogAbs: `${SITE}/photos/bride-tiara-${PH['bride-tiara'][0]}.webp`,
+  title: `آراء الزبونات | ${B.name} – ${B.city}`,
+  desc: `${reviews.length} رأي حقيقي من زبونات ${B.name} في ${B.city} عن المكياج والتسريحات والأظافر والعرايس، منقولة بالحرف من إنستغرام وفيسبوك.`,
+  schema: [crumbLD([['الرئيسية', '/'], ['آراء الزبونات', '/reviews/']])],
+  body: `
+<section class="hero hero--blog"><div class="wrap">
+  <nav class="crumbs" aria-label="مسار التنقل"><ol><li><a href="/">الرئيسية</a></li><li aria-current="page">آراء الزبونات</li></ol></nav>
+  <span class="eyebrow">${reviews.length} رأي حقيقي</span><h1>${words('شو بيحكوا عن براءة', 2)}</h1>
+  <p class="hero__lead">رسائل وصلتنا من زبونات السنتر بعد المكياج والتسريحات والأظافر، منشورة كما هي بدون تعديل.</p>
+</div></section>
+${revSec(reviews, false)}
+<section class="sec sec--light"><div class="wrap" style="text-align:center">
+  <h2>جرّبتي براءة؟</h2><p class="muted">رأيك بيفرق معنا ومع العرايس الجايات. اكتبيلنا تقييم على جوجل.</p>
+  <p style="margin-top:24px"><a class="btn" href="${B.maps}" target="_blank" rel="noopener">قيّمينا على جوجل</a></p>
+</div></section>
+${ctaBlock()}`,
+});
+
 const notFound = page({
   path: '/404.html', ogImg: P.cosmetics, title: `الصفحة غير موجودة | ${B.name}`, desc: 'الصفحة المطلوبة غير موجودة.',
   body: `<section class="hero hero--page"><div class="wrap"><span class="eyebrow">404</span><h1>${words('الصفحة مش موجودة', 2)}</h1><p class="hero__lead">يمكن الرابط تغيّر. ارجعي للرئيسية أو احجزي مباشرة.</p><div class="hero__cta"><a class="btn" href="/">الرئيسية</a></div></div></section>`,
@@ -620,7 +660,7 @@ const notFound = page({
 // ---------- write ----------
 rmSync(OUT, { recursive: true, force: true });
 const engage = engageDef();
-const pages = { '/': home, '/bridal-makeup/': bridal, '/makeup-artist/': mua, '/home-service/': homeSvc, '/makeup-courses/': courses, '/engagement-makeup/': engage, '/blog/': blogIndex, '/about-baraa/': about, ...Object.fromEntries(cats.map(c => [`/blog/${c.slug}/`, hubPage(c)])), ...Object.fromEntries(posts.map(p => [`/blog/${p.slug}/`, postPage(p)])) };
+const pages = { '/': home, '/bridal-makeup/': bridal, '/makeup-artist/': mua, '/home-service/': homeSvc, '/makeup-courses/': courses, '/engagement-makeup/': engage, '/blog/': blogIndex, '/about-baraa/': about, '/reviews/': reviewsPage, ...Object.fromEntries(cats.map(c => [`/blog/${c.slug}/`, hubPage(c)])), ...Object.fromEntries(posts.map(p => [`/blog/${p.slug}/`, postPage(p)])) };
 for (const [p, html] of Object.entries(pages)) {
   mkdirSync(OUT + p, { recursive: true });
   writeFileSync(`${OUT}${p}index.html`, minify.html(rebase(html)));

@@ -345,3 +345,15 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opa
 .guide ul{margin:.6em 0 0;padding-inline-start:1.2em}
 .guide li{margin:.35em 0}
 a.eyebrow{text-decoration:none}
+
+/* client reviews: masonry on desktop, swipe rail on phones */
+.revs{columns:3 300px;column-gap:20px}
+.rev{break-inside:avoid;margin:0 0 20px;padding:30px 26px 22px;border-radius:var(--radius);background:linear-gradient(160deg,rgba(243,220,176,.07),rgba(255,255,255,.02));border:1px solid rgba(216,176,122,.18);position:relative}
+.rev::before{content:"”";position:absolute;top:-6px;inset-inline-start:18px;font-family:var(--f-display);font-size:4.2rem;line-height:1;color:var(--gold);opacity:.55}
+.rev blockquote{margin:0;font-size:1.02rem;line-height:1.95}
+.rev figcaption{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-top:16px;font-size:.82rem;color:var(--gold-2);opacity:.85}
+.rev figcaption b{font-weight:500;padding:.25em .8em;border-radius:999px;border:1px solid rgba(216,176,122,.35)}
+@media (max-width:700px){
+  .sec .revs:has(+p){columns:auto;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;margin-inline:-16px;padding-inline:16px;scrollbar-width:none}
+  .sec .revs:has(+p) .rev{flex:0 0 84%;scroll-snap-align:center;margin:0}
+}
