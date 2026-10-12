@@ -425,6 +425,8 @@ const crumbLD = list => ({ '@type': 'BreadcrumbList', itemListElement: list.map(
 const serviceLD = (name, desc, path) => ({ '@type': 'Service', name, description: desc, serviceType: name, provider: { '@id': salonId }, areaServed: { '@type': 'City', name: B.city }, url: SITE + path });
 
 // ---------- page shell ----------
+// Google cuts titles at ~600px; drop the brand suffix on long ones (og:site_name still carries it)
+const seoTitle = t => t.length > 60 ? t.replace(/\s*[|–]\s*(مدونة )?براءة بيوتي سنتر$/, '') : t;
 const HREFLANG = { '/': '/en/', '/en/': '/' };
 const page = ({ path, title, desc, ogImg, ogAbs, lcp, preload = '', body, schema = [], en = false }) => `<!doctype html>
 <html lang="${en ? 'en' : 'ar-JO'}" dir="${en ? 'ltr' : 'rtl'}">
@@ -432,14 +434,14 @@ const page = ({ path, title, desc, ogImg, ogAbs, lcp, preload = '', body, schema
 <meta charset="utf-8">
 <script>if(location.hostname.endsWith('github.io'))location.replace('https://baraabeautycenter.com'+location.pathname.replace('/baraa-beauty-center','')+location.search+location.hash)</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>${title}</title>
+<title>${seoTitle(title)}</title>
 <meta name="description" content="${desc}">
 <link rel="canonical" href="${SITE}${path}">${HREFLANG[path] ? `\n<link rel="alternate" hreflang="${en ? 'ar' : 'en'}" href="${SITE}${HREFLANG[path]}"><link rel="alternate" hreflang="${en ? 'en' : 'ar'}" href="${SITE}${path}"><link rel="alternate" hreflang="x-default" href="${SITE}/">` : ''}
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="theme-color" content="#120a0f">
 <meta name="geo.region" content="JO-AZ"><meta name="geo.placename" content="${B.city}"><meta name="geo.position" content="${B.geo.lat};${B.geo.lng}"><meta name="ICBM" content="${B.geo.lat}, ${B.geo.lng}">
 <meta property="og:type" content="website"><meta property="og:locale" content="${en ? 'en_US' : 'ar_JO'}"><meta property="og:site_name" content="${B.name}">
-<meta property="og:title" content="${title}"><meta property="og:description" content="${desc}">
+<meta property="og:title" content="${seoTitle(title)}"><meta property="og:description" content="${desc}">
 <meta property="og:url" content="${SITE}${path}"><meta property="og:image" content="${ogAbs || U(ogImg, 1200, 630)}">
 ${ogAbs ? '' : '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">'}
 <meta name="twitter:card" content="summary_large_image">
@@ -474,7 +476,7 @@ const home = page({
 <link rel="preload" as="image" media="(min-width:901px)" imagesrcset="${BASE}/photos/hero-d-640.webp 640w, ${BASE}/photos/hero-d.webp 1320w" imagesizes="62vw" fetchpriority="high">
 `,
   title: `${B.name} | صالون تجميل نسائي وميك أب آرتست في ${B.city}`,
-  desc: `${B.name}، صالون تجميل وكوافيرة في ${B.city} (${B.area}): مكياج عرائس مع خبيرة المكياج ${B.owner}، أكثر من 1000 عروس، سهرات، سشوار وتسريحات، خدمة منزلية وفندقية بـ 8 محافظات. ${B.phoneLocal}`,
+  desc: `${B.name}، صالون تجميل نسائي في ${B.city}: مكياج عرائس مع ${B.owner} (+1000 عروس)، سهرات، سشوار وتسريحات، وخدمة بالبيت أو الفندق بـ 8 محافظات. ${B.phoneLocal}`,
   schema: [faqLD(faqHome)],
   body: `
 <section class="hero" aria-labelledby="h1">
@@ -601,7 +603,7 @@ const splitSec = ({ eyebrow, h, p, ticks, imgId, alt, rev = false, plum = false,
 const bridal = landing({
   path: '/bridal-makeup/', crumb: 'مكياج العرائس', hero: P.bride,
   title: `مكياج عرايس في ${B.city} | صالون عرايس وتجهيز عروس – ${B.name}`,
-  desc: `مكياج عرايس (ميكب عرايس) وباكيج العروس في ${B.city} مع مدام ${B.owner} شخصياً، أكثر من 1000 عروس. تسريحة وطرحة، عروس الحنّة، والمرافقات، وخدمة بالبيت أو الفندق بـ 8 محافظات.`,
+  desc: `مكياج عرايس (ميكب عرايس) وباكيج العروس في ${B.city} مع ${B.owner} شخصياً (+1000 عروس). تسريحة وطرحة، عروس الحنّة، والمرافقات، وخدمة بالبيت أو الفندق بـ 8 محافظات.`,
   eyebrow: `مكياج عرايس · ${B.city}`, h1: 'إطلالة ليلة العمر بتوقيع براءة', h1Shine: 3,
   lead: 'مكياج احترافي وثابت مع مدام براءة شخصياً، تسريحة وطرحة متكتكة، بدون توتر ولا عجقة طريق. بالسنتر بالزرقاء، أو بالبيت والفندق بعمّان والزرقاء والمحافظات القريبة.',
   faq: faqBridal,
@@ -635,7 +637,7 @@ ${splitSec({ eyebrow: 'تسريحات', h: 'كمّلي الإطلالة بتسر
 const homeSvc = landing({
   path: '/home-service/', crumb: 'خدمة تجميل منزلية', hero: P.mua2,
   title: `خدمة تجميل منزلية | ميك اب منزلي وكوافيرة منازل بعمّان والزرقاء وإربد – ${B.name}`,
-  desc: `خدمة تجميل منزلية فاخرة من ${B.name}: سشوار وتسريحات ومكياج احترافي، وتجهيز العرايس والمرافقات بالبيت أو الفندق، بالزرقاء وعمّان وإربد والسلط ومادبا وجرش وعجلون والمفرق. ${B.phoneHomeLocal}`,
+  desc: `خدمة تجميل منزلية: مكياج وسشوار وتجهيز عرايس ومرافقات بالبيت أو الفندق في الزرقاء وعمّان وإربد والسلط ومادبا وجرش وعجلون والمفرق. ${B.phoneHomeLocal}`,
   eyebrow: 'خدمة منزلية وفندقية', h1: 'دلالكِ يوصلكِ وين ما كنتِ', h1Shine: 2,
   lead: 'أرقى تجارب الصالون وخبرات خبيراتنا مباشرة لعتبة داركِ، بنفس الجودة وأعلى معايير التعقيم. للحجز: 0790 690 117 (اتصال أو واتساب).',
   faq: faqHomeSvc,
@@ -731,7 +733,7 @@ ${beautySec()}`,
 const amman = landing({
   path: '/amman-makeup-artist/', crumb: 'ميك أب آرتست في عمّان', hero: P.bride3, also: ['home-service'],
   title: `ميك أب آرتست في عمّان | تجهيز عرايس بالبيت والفندق – ${B.name}`,
-  desc: `ميك أب آرتست في عمّان بالبيت أو الفندق: مكياج عرايس ومرافقات، سهرات، سشوار وتسريحات، وكل خدمات التجميل مع فريق ${B.name} وخبيرة المكياج ${B.owner}. ${B.phoneHomeLocal}`,
+  desc: `ميك أب آرتست في عمّان بالبيت أو الفندق: مكياج عرايس ومرافقات، سهرات، سشوار وتسريحات وكل خدمات التجميل مع فريق ${B.name}. ${B.phoneHomeLocal}`,
   eyebrow: 'عمّان · بيت أو فندق', h1: 'بنجيكِ لعمّان، وين ما كنتِ', h1Shine: 2,
   lead: `ما في داعي تطلعي من بيتك أو فندقك: فريق ${B.name} بيوصلك لعمّان بكل خدماته، من مكياج العروس والمرافقات للسشوار والسهرات.`,
   faq: [
@@ -759,7 +761,7 @@ const faqEn = [
 const en = page({
   path: '/en/', en: true, lcp: P.bride,
   title: `Makeup Artist & Beauty Salon in Zarqa, Jordan | ${B.nameEn}`,
-  desc: `${B.nameEn}: women's beauty salon and bridal makeup artist in Zarqa, Jordan. Bridal, evening and henna makeup, hair styling, keratin, nails, lashes and facials. Home and hotel service in Amman, Zarqa and northern Jordan.`,
+  desc: `${B.nameEn}: women's beauty salon and bridal makeup artist in Zarqa, Jordan. Bridal, evening and henna makeup, hair, nails and facials, plus home and hotel service.`,
   schema: [faqLD(faqEn), { '@type': 'WebPage', '@id': `${SITE}/en/#page`, url: `${SITE}/en/`, inLanguage: 'en', name: `Makeup Artist & Beauty Salon in Zarqa`, about: { '@id': salonId } }],
   body: `
 <section class="hero hero--page" aria-labelledby="h1">
