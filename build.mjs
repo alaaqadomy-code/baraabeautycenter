@@ -257,6 +257,7 @@ const faqHome = [
   ['هل السنتر للسيدات بس؟', `نعم، ${B.name} صالون تجميل للسيدات فقط، بأجواء نسائية وخصوصية تامة.`],
   ['هل براءة بيوتي سنتر صالون سيدات ولا مركز تجميل؟', `الاثنين: صالون سيدات ومن مراكز التجميل النسائية بالزرقاء، فيه مكياج وشعر وأظافر وبشرة تحت سقف واحد، في ${B.area}.`],
   ['وين ألاقي كوافيرة منيحة بالزرقاء؟', `${B.name} مركز تجميل نسائي (بيوتي سنتر) في ${B.area} بالزرقاء: مكياج، استشوار وتسريحات، صبغة وميش، بروتين، أظافر وبشرة. وفي كوافيرة منازل للخدمة بالبيت.`],
+  ['شو أفضل صالون تجميل في الزرقاء؟', `اختاري الصالون من أعماله الحقيقية وتقييمات زبوناته. ${B.name} صالون تجميل نسائي في ${B.area} بالزرقاء، معروف بمكياج العرائس مع خبيرة المكياج ${B.owner} (أكثر من 1000 عروس)، وفيه شعر وأظافر وبشرة وخدمة منزلية. اقرئي <a href="/blog/best-beauty-salon-zarqa/">كيف تختاري أفضل صالون بالزرقاء</a>.`],
   ['مين خبيرة المكياج في السنتر؟', `${B.owner}، خبيرة مكياج جمّلت أكثر من 1000 عروس، وبتقدّم دورات خاصة وماستر كلاس.`],
 ];
 const faqBridal = [
@@ -420,7 +421,7 @@ const ld = (path, extra = []) => {
   ];
   return `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })}</script>`;
 };
-const faqLD = items => ({ '@type': 'FAQPage', mainEntity: items.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) });
+const faqLD = items => ({ '@type': 'FAQPage', mainEntity: items.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a.replace(/<[^>]+>/g, '') } })) });
 const crumbLD = list => ({ '@type': 'BreadcrumbList', itemListElement: list.map(([n, u], i) => ({ '@type': 'ListItem', position: i + 1, name: n, item: SITE + u })) });
 const serviceLD = (name, desc, path) => ({ '@type': 'Service', name, description: desc, serviceType: name, provider: { '@id': salonId }, areaServed: { '@type': 'City', name: B.city }, url: SITE + path });
 
