@@ -1082,7 +1082,7 @@ writeFileSync(`${OUT}/_headers`, `/*
 `);
 writeFileSync(`${OUT}/_redirects`, ['irbid', 'salt', 'madaba', 'aqaba', 'zarqa', 'amman', 'mafraq', 'jerash', 'ajloun'].map(c => `/home-service/${c}/ /home-service/ 301`).join('\n') + '\n');
 writeFileSync(`${OUT}/robots.txt`, `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
-writeFileSync(`${OUT}/adfb46330da73d4aad1c8aab1ee3fab7.txt`, 'adfb46330da73d4aad1c8aab1ee3fab7');
+writeFileSync(`${OUT}/f5dd5f7e8e0cbbbe898342bace087e6e.txt`, 'f5dd5f7e8e0cbbbe898342bace087e6e');
 const maxDate = list => list.map(p => p.updated || p.date).sort().pop();
 const lastmod = path => {
   const post = posts.find(p => path === `/blog/${p.slug}/`); if (post) return post.updated || post.date;
