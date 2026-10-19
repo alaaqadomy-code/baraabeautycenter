@@ -668,7 +668,7 @@ const bridal = landing({
 <section class="sec"><div class="wrap"><div class="sec__head center" data-reveal><span class="eyebrow">مكياج عرايس فخم وناعم بالصور</span><h2>مكياج عروس ناعم أو فخم؟</h2><p class="muted">الناعم بيبرز ملامحك بلمسة طبيعية وبيطلع حلو بالصور النهارية، والفخم عيون أقوى ورموش وكونتور لقاعات المسا. هاي عرايس حقيقيات من شغل السنتر بالزرقاء.</p></div>
   <div class="gallery">${[['bride-bow', 'مكياج عروس ناعم بالزرقاء مع فيونكة'], ['bride-tiara', 'مكياج عروس فخم مع تسريحة مرفوعة وتاج'], ['bride-pearls', 'مكياج عروس ناعم مع طرحة اللؤلؤ'], ['bride-veil', 'مكياج عروس ناعم مع طرحة وفيونكة'], ['bride-companion', 'العروس ومرافقتها من تجهيز السنتر'], ['henna-bride', 'مكياج عروس الحنّة بالثوب المطرّز']].map(([n, cap]) => `<figure>${ph(n, cap, '(max-width:600px) 100vw, 33vw')}<figcaption>${cap}</figcaption></figure>`).join('')}</div></div></section>
 ${splitSec({ eyebrow: 'VIP بالبيت أو الفندق', h: 'يومك الكبير بروقان وراحة', p: 'خدمة تجهيز العروس والمرافقات بتوصلك لغاية باب بيتك أو غرفتك بالفندق، بعمّان وإربد والسلط ومادبا وجرش وعجلون والمفرق.', ticks: ['ميك أب احترافي وثابت', 'تسريحة وطرحة متكتكة', 'أعداد محدودة شهرياً، احجزي بدري'], imgId: 'ph:bride-veil', alt: 'عروس بالطرحة من أعمال مدام براءة', plum: true, badge: '<b>بيت أو فندق</b>بـ 8 محافظات' })}
-${splitSec({ eyebrow: 'العروس والمرافقات', h: 'جهّزي أهلك وصاحباتك معك', p: `خدمة العرايس والمرافقات بالسنتر في ${B.city}، ${B.area}.`, ticks: ['مكياج وتسريحات للمرافقات', 'أجواء حلوة ومريحة مع فريق السنتر', `رقم السنتر: ${B.phoneLocal}`], imgId: 'ph:bride-salon', alt: 'مدام براءة تجهّز العروس في السنتر', rev: true })}`,
+${splitSec({ eyebrow: 'العروس والمرافقات', h: 'جهّزي أهلك وصاحباتك معك', p: `خدمة العرايس والمرافقات بالسنتر في ${B.city}، ${B.area}. ولمكياج سهرات المرافقات، تعرّفي على <a href="/makeup-artist/">ميكب ارتست بالزرقاء</a> ${B.owner}.`, ticks: ['مكياج وتسريحات للمرافقات', 'أجواء حلوة ومريحة مع فريق السنتر', `رقم السنتر: ${B.phoneLocal}`], imgId: 'ph:bride-salon', alt: 'مدام براءة تجهّز العروس في السنتر', rev: true })}`,
 });
 
 const mua = landing({
@@ -941,7 +941,7 @@ const hubPage = c => {
 <section class="hero hero--blog"><div class="wrap">
   <nav class="crumbs" aria-label="مسار التنقل"><ol><li><a href="/">الرئيسية</a></li><li><a href="/blog/">المدونة</a></li><li aria-current="page">${c.name}</li></ol></nav>
   <span class="eyebrow">${c.name} · ${c.items.length} مقالات</span><h1>${words(c.h1, 2)}</h1>
-  <p class="hero__lead">${c.intro}</p>
+  <p class="hero__lead">${c.introHtml || c.intro}</p>
   ${c.pillar ? `<p class="hero__cta"><a class="btn" href="${c.pillar[0]}">${c.pillar[1]} ${I.arrow}</a></p>` : ''}
 </div></section>
 <section class="sec sec--light" style="padding-top:60px"><div class="wrap">
@@ -967,7 +967,7 @@ const about = page({
   <span class="eyebrow">خبيرة مكياج · ${B.city}</span><h1>${words(B.owner + ' خبيرة العرائس', 1)}</h1>
   <p class="hero__lead">صاحبة ${B.name} في ${B.area}، وشغلها الحقيقي منشور على <a href="${B.ig}" target="_blank" rel="noopener" style="color:var(--gold-2)">إنستغرام</a> (+${B.igFollowers} متابع).</p>
 </div></section>
-${splitSec({ eyebrow: 'مين براءة؟', h: 'خبرة بتبان بالتفاصيل', p: `${B.owner} خبيرة مكياج عرائس وصاحبة ${B.name} في ${B.city}. بتشتغل بنفسها على العرايس بالسنتر، وبتجهّز العرايس بالبيت أو الفندق بـ 8 محافظات، وبتعلّم المكياج بدورات خاصة وماستر كلاس.`, ticks: ['مكياج العروس بإيدها شخصياً', 'مكياج عرائس وعروس الحنّة والمرافقات', 'سهرات وسشوار وتسريحات مع الطرحة', 'دورات خاصة وماستر كلاس'], imgId: 'ph:bride-pearls', alt: `مكياج عروس من أعمال ${B.owner}` })}
+${splitSec({ eyebrow: 'مين براءة؟', h: 'خبرة بتبان بالتفاصيل', p: `${B.owner} خبيرة مكياج عرائس وصاحبة ${B.name} في ${B.city}. بتشتغل بنفسها على العرايس بالسنتر، وبتجهّز العرايس بالبيت أو الفندق بـ 8 محافظات، وبتعلّم المكياج بدورات خاصة وماستر كلاس. ولمكياج السهرات والمناسبات، التفاصيل بصفحة <a href="/makeup-artist/">خبيرة مكياج في الزرقاء</a>.`, ticks: ['مكياج العروس بإيدها شخصياً', 'مكياج عرائس وعروس الحنّة والمرافقات', 'سهرات وسشوار وتسريحات مع الطرحة', 'دورات خاصة وماستر كلاس'], imgId: 'ph:bride-pearls', alt: `مكياج عروس من أعمال ${B.owner}` })}
 <section class="sec sec--light"><div class="wrap">
   <div class="sec__head" data-reveal><span class="eyebrow">من أعمالها</span><h2>إطلالات بتحكي عن الشغل</h2></div>
   <div class="gallery">${WORK.slice(0, 6).map(([n, alt, cap]) => `<figure>${ph(n, alt, '(max-width:600px) 100vw, 33vw')}<figcaption>${cap}</figcaption></figure>`).join('')}</div>
