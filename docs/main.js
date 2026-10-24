@@ -83,3 +83,54 @@
   d.addEventListener('cancel', e => { e.preventDefault(); close(); });
   d.addEventListener('close', () => { document.documentElement.style.overflow = ''; btn.focus(); });
 })();
+
+// ---- قياس التفاعل: واتساب، الخريطة، الاتصال ----
+// ترسل أحداثاً إلى GA4 إن كان الوسم مركّباً، وتبقى صامتة تماماً إن لم يكن.
+(() => {
+  const send = (name, params) => {
+    if (typeof window.gtag !== 'function') return;
+    window.gtag('event', name, params);
+  };
+
+  // مصدر النقرة: اسم القسم الأقرب أو الزر العائم
+  const where = el => {
+    if (el.closest('.fab')) return 'fab';
+    const s = el.closest('section[id]');
+    return (s && s.id) || 'page';
+  };
+
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href]');
+    if (a) {
+      const href = a.getAttribute('href') || '';
+      if (href.includes('wa.me')) {
+        // رقم الحجز 962796892705 مقابل رقم الخدمة المنزلية 962790690117
+        const home = href.includes('962790690117');
+        send('whatsapp_click', {
+          link_url: href.split('?')[0],
+          wa_number: home ? 'home_service' : 'booking',
+          location: where(a),
+          page_path: location.pathname
+        });
+        return;
+      }
+      if (/google\.[a-z.]+\/maps|maps\.app\.goo\.gl|maps\.google\./.test(href)) {
+        send('location_click', {
+          link_url: href.split('?')[0],
+          method: href.includes('dir/?api=1') ? 'directions' : 'map',
+          location: where(a),
+          page_path: location.pathname
+        });
+        return;
+      }
+      if (href.startsWith('tel:')) {
+        send('phone_click', { phone: href.replace('tel:', ''), location: where(a), page_path: location.pathname });
+        return;
+      }
+    }
+    // الزر العائم للخريطة يفتح نافذة لا رابطاً
+    if (e.target.closest('.fab--map')) {
+      send('location_click', { method: 'map_sheet', location: 'fab', page_path: location.pathname });
+    }
+  }, { capture: true });
+})();
