@@ -8,3 +8,8 @@ drafts/
 # site-deploy artifacts (keep .claude/site.json tracked)
 .claude/deploy/
 .claude/last-deploy.json
+
+# build/tool caches and local-only artefacts
+.wrangler/
+graphify-out/
+content/assets-inbox.zip
