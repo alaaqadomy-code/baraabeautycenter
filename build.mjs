@@ -26,6 +26,14 @@ import { execSync } from 'node:child_process';
 const gitDate = (...f) => { try { return execSync(`git log -1 --format=%cs -- ${f.join(' ')}`, { encoding: 'utf8' }).trim() || TODAY; } catch { return TODAY; } };
 const SITE_UPDATED = gitDate('build.mjs', 'src');
 
+// Google Analytics 4 — معرّف القياس. ليس سراً: يظهر في مصدر كل صفحة على أي موقع.
+// يُخبز في مجلد docs المرفوع، لأن Cloudflare Pages يخدم الناتج الجاهز ولا يبني.
+// اتركه فارغاً فلا يُطبع أي وسم إطلاقاً ويبقى الموقع كما هو تماماً.
+const GA4_ID = (process.env.GA4_ID || 'G-XB6B0SM409').trim();
+const gaTag = () => GA4_ID ? `<link rel="preconnect" href="https://www.googletagmanager.com">
+<script async src="https://www.googletagmanager.com/gtag/js?id=${GA4_ID}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA4_ID}');</script>` : '';
+
 const B = {
   name: 'براءة بيوتي سنتر', nameEn: 'Baraa Beauty Center',
   city: 'الزرقاء', cityEn: 'Zarqa', area: 'ضاحية المدينة المنورة', owner: 'براءة علي',
@@ -482,6 +490,7 @@ ${lcp ? `<link rel="preload" as="image" media="(max-width:900px)" imagesrcset="$
 <link rel="preload" as="image" media="(min-width:901px)" imagesrcset="${U(lcp, 1600, 992)} 1600w, ${U(lcp, 2200, 1364)} 2200w" imagesizes="100vw" fetchpriority="high">` : ''}
 ${preload}<style>${CSS_INLINE}</style>
 ${ld(path, schema)}
+${gaTag()}
 </head>
 <body>
 ${en ? `<div lang="ar" dir="rtl">${header(path)}</div>` : header(path)}
