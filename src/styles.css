@@ -309,6 +309,11 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opa
 @keyframes bob{50%{transform:translateY(-3px)}}
 .fab__tip{position:absolute;inset-inline-start:calc(100% + 10px);white-space:nowrap;background:rgba(18,10,15,.85);color:var(--gold-2);font-size:.82rem;padding:.35em .8em;border-radius:99px;border:1px solid rgba(243,220,176,.25);opacity:0;transform:translateX(6px);transition:opacity .3s,transform .3s var(--ease);pointer-events:none}
 .fab--map:hover .fab__tip,.fab--map:focus-visible .fab__tip{opacity:1;transform:none}
+/* app download FAB (stacked above the map FAB) */
+.fab--app{bottom:156px;width:54px;height:54px;inset-inline-start:23px;color:var(--gold-2);background:linear-gradient(135deg,var(--plum-2),var(--plum));border:1px solid rgba(216,176,122,.6);box-shadow:0 14px 34px -8px rgba(0,0,0,.6)}
+.fab--app::before{display:none}
+.fab--app svg{width:24px;height:24px}
+.fab--app:hover .fab__tip,.fab--app:focus-visible .fab__tip{opacity:1;transform:none}
 .mapsheet{border:0;padding:0;background:transparent;max-width:min(560px,calc(100% - 32px));width:100%;color:var(--text);overflow:visible}
 .mapsheet::backdrop{background:rgba(10,5,8,.6);backdrop-filter:blur(6px)}
 .mapsheet[open]{animation:sheetIn .5s var(--ease)}
