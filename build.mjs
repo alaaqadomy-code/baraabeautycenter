@@ -51,7 +51,7 @@ const B = {
   fb: 'https://www.facebook.com/Baraabeautycenter/',
   ig: 'https://www.instagram.com/baraa_beauty_center/',
   snap: 'https://www.snapchat.com/@makeup.bybaraa',
-  app: 'https://baraa-app.pages.dev/', // download page for the Android APK + iPhone web app
+  app: 'https://app.baraabeautycenter.com/', // download page for the Android APK + iPhone web app
   maps: 'https://www.google.com/maps?cid=9717818474838566468', // Google Business Profile
   geo: { lat: 32.0515639, lng: 36.0459091 },
   // owner-confirmed 2026-10-16: landmark, nearest hospital, hours (every day incl. Friday)
