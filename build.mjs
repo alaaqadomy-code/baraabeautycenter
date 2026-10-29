@@ -51,6 +51,7 @@ const B = {
   fb: 'https://www.facebook.com/Baraabeautycenter/',
   ig: 'https://www.instagram.com/baraa_beauty_center/',
   snap: 'https://www.snapchat.com/@makeup.bybaraa',
+  app: 'https://baraa-app.pages.dev/', // download page for the Android APK + iPhone web app
   maps: 'https://www.google.com/maps?cid=9717818474838566468', // Google Business Profile
   geo: { lat: 32.0515639, lng: 36.0459091 },
   // owner-confirmed 2026-10-16: landmark, nearest hospital, hours (every day incl. Friday)
@@ -106,6 +107,7 @@ const I = {
   ig: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>',
   fb: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8V6.5c0-.7.2-1.2 1.3-1.2H17V2.2C16.7 2.1 15.6 2 14.4 2 11.9 2 10.2 3.5 10.2 6.3V8H7.5v3.4h2.7V22H14V11.4h2.7l.4-3.4H14z"/></svg>',
   snap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 2.5c3 0 5.2 2.3 5.2 5.3v2.4c.5.2 1.2 0 1.7-.2.6-.2 1.1.6.5 1-.6.5-1.8.8-2 1.4.6 1.7 2 3.4 3.8 3.9.4.1.4.6 0 .8-.7.3-1.6.4-2 .7-.2.3-.1 1-.5 1.2-.6.2-1.6-.3-2.8.1-1 .4-1.9 1.6-3.9 1.6s-2.9-1.2-3.9-1.6c-1.2-.4-2.2.1-2.8-.1-.4-.2-.3-.9-.5-1.2-.4-.3-1.3-.4-2-.7-.4-.2-.4-.7 0-.8 1.8-.5 3.2-2.2 3.8-3.9-.2-.6-1.4-.9-2-1.4-.6-.4-.1-1.2.5-1 .5.2 1.2.4 1.7.2V7.8c0-3 2.2-5.3 5.2-5.3z"/></svg>',
+  app: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v11"/><path d="M7.5 10.5 12 15l4.5-4.5"/><path d="M5 19.5h14"/></svg>',
   pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>',
   nav: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8z"/></svg>',
   close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
@@ -389,6 +391,7 @@ const footer = () => `<footer class="ftr"><div class="wrap">
       <li><a href="${B.waHome}" target="_blank" rel="noopener">واتساب الخدمة المنزلية</a></li>
       <li>العنوان: <a href="${B.maps}" target="_blank" rel="noopener">${B.addr}</a></li>
       <li>ساعات الدوام: ${B.hours}</li>
+      <li><a href="${B.app}" target="_blank" rel="noopener nofollow">حمّلي تطبيق براءة (أندرويد وآيفون)</a></li>
       ${prices.live ? '<li><a href="/prices/">البكجات والأسعار</a></li>' : ''}
     </ul></div>
   </div>
@@ -396,6 +399,7 @@ const footer = () => `<footer class="ftr"><div class="wrap">
 </div></footer>
 <button class="fab fab--map" type="button" aria-haspopup="dialog" aria-controls="mapsheet" aria-label="موقع السنتر على الخريطة">${I.pin}<span class="fab__tip">موقعنا</span></button>
 <a class="fab" href="${B.wa}" target="_blank" rel="noopener" aria-label="احجزي عبر واتساب">${I.wa}</a>
+<a class="fab fab--app" href="${B.app}" target="_blank" rel="noopener nofollow" aria-label="حمّلي تطبيق براءة بيوتي سنتر لأندرويد وآيفون">${I.app}<span class="fab__tip">حمّلي التطبيق</span></a>
 <dialog class="mapsheet" id="mapsheet" aria-labelledby="map-h">
   <div class="mapsheet__card">
     <button class="mapsheet__x" type="button" aria-label="إغلاق">${I.close}</button>
