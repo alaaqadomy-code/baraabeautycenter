@@ -1077,7 +1077,7 @@ const legalPage = ({ path, crumb, title, desc, h1, body }) => page({
 </div></section>
 <section class="sec sec--light post"><div class="wrap"><div class="prose" style="max-width:76ch;margin:0 auto">${body}</div></div></section>`,
 });
-const privacy = legalPage({ path: '/privacy/', crumb: 'سياسة الخصوصية', h1: 'سياسة الخصوصية', title: `سياسة الخصوصية | ${B.name}`, desc: `ما البيانات التي يجمعها موقع ${B.name} في الزرقاء عند الحجز عبر واتساب أو الاتصال، كيف نستخدمها، صور الزبونات، الكوكيز وتحليلات الزيارات، وحقوقك في الحذف والتصحيح.`, body: pageExtra['/privacy/'] });
+const privacy = legalPage({ path: '/privacy/', crumb: 'سياسة الخصوصية', h1: 'سياسة الخصوصية', title: `سياسة الخصوصية | ${B.name}`, desc: `ما البيانات التي يجمعها موقع ${B.name} عند الحجز بواتساب أو الاتصال، وكيف نستخدمها، وصور الزبونات، والكوكيز، وحقوقك في الحذف والتصحيح.`, body: pageExtra['/privacy/'] });
 const terms = legalPage({ path: '/terms/', crumb: 'شروط الحجز والاستخدام', h1: 'شروط الحجز والاستخدام', title: `شروط الحجز والاستخدام | ${B.name}`, desc: `شروط الحجز في ${B.name} بالزرقاء: تأكيد الموعد، التأخير والإلغاء، الخدمة المنزلية في 8 محافظات، جلسة التجربة، الصور والمحتوى، وحدود المسؤولية.`, body: pageExtra['/terms/'] });
 
 const notFound = page({
