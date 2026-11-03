@@ -10,6 +10,7 @@ import { pageExtra } from './content/extra-pages.mjs';
 import { hubs } from './content/extra-hubs.mjs';
 import { postExtra } from './content/extra-posts.mjs';
 import { postMore } from './content/extra-posts-more.mjs';
+import { pageUpdated } from './content/page-dates.mjs';
 for (const k of Object.keys(hubs)) if (!cats.find(c => c.slug === k)) throw new Error('extra-hubs: unknown hub ' + k);
 for (const k of [...Object.keys(postExtra), ...Object.keys(postMore)]) if (!posts.find(p => p.slug === k)) throw new Error('extra-posts: unknown post ' + k);
 // attach each post to its cluster; fail loudly on orphans/duplicates
@@ -31,7 +32,8 @@ const rebase = h => h.replace(/(href|src)="\/(?!\/)/g, `$1="${BASE}/`);
 const TODAY = new Date().toISOString().slice(0, 10);
 import { execSync } from 'node:child_process';
 const gitDate = (...f) => { try { return execSync(`git log -1 --format=%cs -- ${f.join(' ')}`, { encoding: 'utf8' }).trim() || TODAY; } catch { return TODAY; } };
-const SITE_UPDATED = gitDate('build.mjs', 'src');
+// per-page content date (content/page-dates.mjs): mandatory, so a template edit never moves every page's lastmod
+const pageDate = path => { const d = pageUpdated[path]; if (!/^\d{4}-\d{2}-\d{2}$/.test(d || '')) throw new Error('page-dates: missing or invalid date for ' + path); return d; };
 
 // Google Analytics 4 — معرّف القياس. ليس سراً: يظهر في مصدر كل صفحة على أي موقع.
 // يُخبز في مجلد docs المرفوع، لأن Cloudflare Pages يخدم الناتج الجاهز ولا يبني.
@@ -654,7 +656,7 @@ const ANSWERS = {
 };
 const landing = ({ path, crumb, title, desc, h1, h1Shine, eyebrow, slogan, lead, hero, ogImg, sections, faq, service, also }) => page({
   path, title, desc, lcp: hero, ogImg: ogImg || hero, commercial: true,
-  schema: [serviceLD(crumb, desc, path), faqLD(faq), crumbLD([['الرئيسية', '/'], [crumb, path]])],
+  schema: [serviceLD(crumb, desc, path), faqLD(faq), crumbLD([['الرئيسية', '/'], [crumb, path]]), { '@type': 'WebPage', '@id': `${SITE}${path}#page`, url: `${SITE}${path}`, name: crumb, inLanguage: 'ar-JO', about: { '@id': salonId }, dateModified: pageDate(path) }],
   body: `
 <section class="hero hero--page" aria-labelledby="h1">
   ${heroMedia([[hero, h1]])}
@@ -666,7 +668,7 @@ const landing = ({ path, crumb, title, desc, h1, h1Shine, eyebrow, slogan, lead,
     ${ctas()}
   </div>
 </section>
-${ANSWERS[path] ? `<section class="sec sec--light sec--answer"><div class="wrap"><aside class="tldr" aria-label="باختصار"><b>باختصار</b><p>${ANSWERS[path]}</p></aside></div></section>` : ''}
+${ANSWERS[path] ? `<section class="sec sec--light sec--answer"><div class="wrap"><aside class="tldr" aria-label="باختصار"><b>باختصار</b><p>${ANSWERS[path]}</p><p style="margin-top:8px;font-size:.85em;opacity:.75">آخر تحديث: <time datetime="${pageDate(path)}">${fmtDate(pageDate(path))}</time></p></aside></div></section>` : ''}
 ${sections}
 ${pageExtra[path] || ''}
 ${clusterSec(path, also)}
@@ -1068,12 +1070,12 @@ ${ctaBlock()}`,
 // ---------- LEGAL: /privacy/ and /terms/ (new pages, 2026-10-26) ----------
 const legalPage = ({ path, crumb, title, desc, h1, body }) => page({
   path, ogImg: P.cosmetics, title, desc,
-  schema: [{ '@type': 'WebPage', '@id': `${SITE}${path}#page`, url: `${SITE}${path}`, name: crumb, inLanguage: 'ar-JO', about: { '@id': salonId }, dateModified: SITE_UPDATED }, crumbLD([['الرئيسية', '/'], [crumb, path]])],
+  schema: [{ '@type': 'WebPage', '@id': `${SITE}${path}#page`, url: `${SITE}${path}`, name: crumb, inLanguage: 'ar-JO', about: { '@id': salonId }, dateModified: pageDate(path) }, crumbLD([['الرئيسية', '/'], [crumb, path]])],
   body: `
 <section class="hero hero--blog"><div class="wrap">
   <nav class="crumbs" aria-label="مسار التنقل"><ol><li><a href="/">الرئيسية</a></li><li aria-current="page">${crumb}</li></ol></nav>
   <span class="eyebrow">${B.name}</span><h1>${words(h1, 1)}</h1>
-  <p class="hero__lead">آخر تحديث: <time datetime="${SITE_UPDATED}">${fmtDate(SITE_UPDATED)}</time></p>
+  <p class="hero__lead">آخر تحديث: <time datetime="${pageDate(path)}">${fmtDate(pageDate(path))}</time></p>
 </div></section>
 <section class="sec sec--light post"><div class="wrap"><div class="prose" style="max-width:76ch;margin:0 auto">${body}</div></div></section>`,
 });
@@ -1086,9 +1088,12 @@ const notFound = page({
 }).replace('index,follow', 'noindex');
 
 // ---------- write ----------
-rmSync(OUT, { recursive: true, force: true });
 const engage = engageDef();
 const pages = { '/': home, '/bridal-makeup/': bridal, '/makeup-artist/': mua, '/home-service/': homeSvc, '/makeup-courses/': courses, '/engagement-makeup/': engage, '/evening-makeup/': evening, '/hair-styling/': hair, '/henna-makeup/': henna, '/amman-makeup-artist/': amman, '/en/': en, ...Object.fromEntries(BEAUTY.map(x => [x.path, beautyPage(x)])), '/blog/': blogIndex, '/about-baraa/': about, '/reviews/': reviewsPage, ...Object.fromEntries(cats.map(c => [`/blog/${c.slug}/`, hubPage(c)])), ...Object.fromEntries(posts.map(p => [`/blog/${p.slug}/`, postPage(p)])) , '/privacy/': privacy, '/terms/': terms };
+// validate page dates before docs/ is wiped, so a missing date never leaves a half-built site
+for (const p of Object.keys(pages)) if (!p.startsWith('/blog/')) pageDate(p);
+for (const p of Object.keys(pageUpdated)) if (!pages[p]) throw new Error('page-dates: unknown page ' + p);
+rmSync(OUT, { recursive: true, force: true });
 for (const [p, html] of Object.entries(pages)) {
   mkdirSync(OUT + p, { recursive: true });
   writeFileSync(`${OUT}${p}index.html`, minify.html(rebase(html)));
@@ -1132,9 +1137,10 @@ writeFileSync(`${OUT}/f5dd5f7e8e0cbbbe898342bace087e6e.txt`, 'f5dd5f7e8e0cbbbe89
 const maxDate = list => list.map(p => p.updated || p.date).sort().pop();
 const lastmod = path => {
   const post = posts.find(p => path === `/blog/${p.slug}/`); if (post) return post.updated || post.date;
-  const cat = cats.find(c => path === `/blog/${c.slug}/`); if (cat) return [maxDate(cat.items), SITE_UPDATED].sort().pop();
-  if (path === '/blog/') return [maxDate(posts), SITE_UPDATED].sort().pop();
-  return SITE_UPDATED;
+  const cat = cats.find(c => path === `/blog/${c.slug}/`); if (cat) return maxDate(cat.items);
+  if (path === '/blog/') return maxDate(posts);
+  if (path === '/prices/') { if (!/^\d{4}-\d{2}-\d{2}$/.test(prices.updated || '')) throw new Error('prices: updated missing'); return prices.updated; }
+  return pageDate(path);
 };
 writeFileSync(`${OUT}/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...Object.keys(pages), ...(prices.live ? ['/prices/'] : [])].map(p => `  <url><loc>${SITE}${p}</loc><lastmod>${lastmod(p)}</lastmod></url>`).join('\n')}\n</urlset>\n`);
 writeFileSync(`${OUT}/site.webmanifest`, JSON.stringify({ name: B.name, short_name: 'براءة', lang: 'ar', dir: 'rtl', start_url: BASE + '/', display: 'standalone', background_color: '#120a0f', theme_color: '#120a0f', icons: [{ src: BASE + '/favicon.svg', sizes: 'any', type: 'image/svg+xml' }] }));
