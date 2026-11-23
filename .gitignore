@@ -13,3 +13,9 @@ drafts/
 .wrangler/
 graphify-out/
 content/assets-inbox.zip
+# حزمة علاء
+content-plan/gsc-raw.json
+content-plan/gsc-snapshots/
+content-plan/verify-live.json
+content-plan/index-request.json
+content-plan/index-coverage.json

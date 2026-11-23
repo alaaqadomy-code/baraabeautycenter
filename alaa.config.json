@@ -1,0 +1,53 @@
+{
+  "_note": "أنشأه install.mjs من حزمة علاء. عدّل القيم لموقعك. لا أسرار هنا.",
+  "mode": "dist",
+  "domain": "https://baraabeautycenter.com",
+  "dist": "docs",
+  "trailingSlash": true,
+  "contentPattern": "^/(blog/[^/]+|bridal-makeup|makeup-artist|home-service|makeup-courses|engagement-makeup|evening-makeup|hair-styling|henna-makeup|amman-makeup-artist|protein-keratin|hair-color|nails|lashes|eyebrows|facial|halawa|gel-nails|haircut|hair-spa|hair-extensions)/?$",
+  "contentExclude": null,
+  "locales": {
+    "/en": [
+      "en",
+      "ltr"
+    ],
+    "/": [
+      "ar",
+      "rtl"
+    ]
+  },
+  "sitemapLive": "/sitemap.xml",
+  "sitemapLocal": "docs/sitemap.xml",
+  "titleMax": 60,
+  "descMin": 120,
+  "descMax": 160,
+  "moneyPages": [
+    "/",
+    "/bridal-makeup/",
+    "/home-service/",
+    "/makeup-artist/"
+  ],
+  "minMoney": 12,
+  "h1Exempt": "^/(404|404/)$",
+  "claimsProfile": "generic",
+  "selftestPage": "nails/index.html",
+  "touchGroups": [],
+  "typosPaths": [
+    "content"
+  ],
+  "liveAssets": [],
+  "bannedLive": [
+    "ليزر",
+    "بوتكس",
+    "فيلر"
+  ],
+  "anchorBoxes": null,
+  "content": {
+    "articles": null,
+    "services": null,
+    "noindex": null,
+    "layers": [],
+    "articlePrefix": "/blog/",
+    "servicePrefix": "/__none__/"
+  }
+}

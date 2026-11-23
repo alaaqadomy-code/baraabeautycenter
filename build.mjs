@@ -536,7 +536,7 @@ const home = page({
   preload: `<link rel="preload" as="image" media="(max-width:900px)" href="/photos/hero-m.webp" fetchpriority="high">
 <link rel="preload" as="image" media="(min-width:901px)" imagesrcset="${BASE}/photos/hero-d-640.webp 640w, ${BASE}/photos/hero-d.webp 1320w" imagesizes="62vw" fetchpriority="high">
 `,
-  title: `صالون تجميل نسائي في ${B.city} | ${B.name}`,
+  title: `${B.name} بالزرقاء | صالون تجميل نسائي ومكياج عرائس`,
   desc: `صالون تجميل نسائي في ${B.city}، ${B.area}: مكياج عرائس مع ${B.owner}، سهرات، سشوار وتسريحات، وخدمة بالبيت. يومياً 11 ص–6 م والجمعة دوام. ${B.phoneLocal}`,
   schema: [faqLD(faqHome)],
   body: `
