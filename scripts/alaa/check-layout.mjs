@@ -16,7 +16,9 @@ const css = cssFiles.map((f) => readFileSync(f, 'utf8')).join('\n');
 const noMedia = css.replace(/@media[^{]*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}/g, ' ');
 // جدول داخل حاوية تمرير (table-wrap/overflow-x-auto) يحق له min-width: هذا هو حل حسن نفسه للجداول العريضة
 // max-width ليست عرضاً صلباً (لا تسبب تمريراً على الجوال): «.max-w-[1180px]» كانت تُعدّ مخالفة (تركيب snaporahub)
-for (const m of noMedia.matchAll(/([^{}]+)\{[^{}]*?(?:min-width|(?<!max-)width)\s*:\s*(\d{3,})px/g)) if (Number(m[2]) >= 360 && !/^\s*(html|body|\.container|img|svg|video|iframe)|table/i.test(m[1])) issues.push(`CSS :: عرض صلب ${m[2]}px خارج media: ${m[1].trim().slice(0, 50)}`);
+// عنصر position:fixed لا يوسّع الصفحة (لا يدخل عرض التمرير)، كهالة زخرفية تتبع المؤشر: تركيب براءة، 23 نوفمبر 2026
+const fixedRule = (i) => /position\s*:\s*fixed/.test(noMedia.slice(i).match(/\{[^{}]*\}/)?.[0] ?? '');
+for (const m of noMedia.matchAll(/([^{}]+)\{[^{}]*?(?:min-width|(?<!max-)width)\s*:\s*(\d{3,})px/g)) if (Number(m[2]) >= 360 && !fixedRule(m.index) && !/^\s*(html|body|\.container|img|svg|video|iframe)|table/i.test(m[1])) issues.push(`CSS :: عرض صلب ${m[2]}px خارج media: ${m[1].trim().slice(0, 50)}`);
 for (const m of noMedia.matchAll(/((?:header|nav|\.site-nav|\.header)[^{}]*)\{[^{}]*?\bheight\s*:\s*(\d{2,})px/g)) issues.push(`CSS :: ارتفاع هيدر صلب ${m[2]}px: ${m[1].trim().slice(0, 40)}`);
 let tables = 0, sticky = 0;
 for (const { url, html } of all) {

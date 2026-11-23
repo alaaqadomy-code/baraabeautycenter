@@ -15,7 +15,8 @@ const all = pages().filter((p) => !p.noindex && p.url !== '/404'); const issues 
 const path = (u) => { try { return decodeURIComponent(new URL(u, siteUrl()).pathname).replace(/\/$/, '') || '/'; } catch { return u; } };
 const same = (a, b) => (a || '').replace(/\/$/, '') === (b || '').replace(/\/$/, '');
 // أي نوع من Organization يكفي (LocalBusiness، Store، MedicalOrganization…)، لا الاسم الحرفي وحده
-const ORG = /^(Organization|Corporation|LocalBusiness|NGO|OnlineBusiness|OnlineStore|Store|ProfessionalService|[A-Z]\w*(Organization|Business|Store|Service|Clinic|Agency|Office|Center))$/;
+// والأنواع الفرعية لـ LocalBusiness في schema.org (BeautySalon، HairSalon، DaySpa، Restaurant، Dentist…): تركيب براءة، 23 نوفمبر 2026
+const ORG = /^(Organization|Corporation|LocalBusiness|NGO|OnlineBusiness|OnlineStore|Store|ProfessionalService|Dentist|Physician|Restaurant|Hotel|Hospital|Pharmacy|Bakery|Brewery|Winery|Motel|Hostel|Resort|Library|Museum|Zoo|Aquarium|[A-Z]\w*(Organization|Business|Store|Service|Clinic|Agency|Office|Center|Salon|Spa|Shop|Parlor|Club|Studio|Restaurant|Hotel|Dealer|Repair|Wash|Station|Firm))$/;
 for (const { url, html } of all) {
   const add = (m) => issues.push(`${url} :: ${m}`);
   const graph = [];

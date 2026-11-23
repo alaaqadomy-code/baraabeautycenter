@@ -18,7 +18,12 @@ const PAGE = (() => { if (CONFIG.selftestPage && existsSync(join(DISTDIR, CONFIG
   // صفحة محتوى عادية: فيها <main> و<h1> وJSON-LD، ليست الرئيسية ولا 404 ولا noindex (كان يُختار 404 أولاً في رصد)
   const ok = (p) => { const h = readFileSync(p, 'utf8'); const rel = p.replace(/\\/g, '/'); return /<main[\s>]/.test(h) && /<h1[\s>]/.test(h) && !/noindex/.test(h.match(/name="robots"[^>]*>/)?.[0] ?? '') && !/(^|\/)404(\/index)?\.html$/.test(rel) && rel !== join(DISTDIR, 'index.html').replace(/\\/g, '/'); };
   const cands = existsSync(DISTDIR) ? walk(DISTDIR).filter(ok) : [];
-  const f = cands.find((p) => /application\/ld\+json/.test(readFileSync(p, 'utf8'))) ?? cands[0] ?? null;
+  // صفحة محتوى (بنمط contentPattern) أولاً: فواحص المحتوى (التشابه، الكلمة في H1) لا ترى غيرها؛ كان يُختار /about-baraa/ أبجدياً (براءة، 23 نوفمبر 2026)
+  const CONTENT = CONFIG.contentPattern ? new RegExp(CONFIG.contentPattern) : null;
+  const urlOf = (p) => { const r = p.replace(/\\/g, '/').slice(DISTDIR.replace(/\\/g, '/').length); return /\/index\.html$/.test(r) ? r.replace(/\/index\.html$/, CONFIG.trailingSlash ? '/' : '') || '/' : r.replace(/\.html$/, ''); };
+  const content = CONTENT ? cands.filter((p) => CONTENT.test(urlOf(p))) : [];
+  const pool = content.length ? content : cands;
+  const f = pool.find((p) => /application\/ld\+json/.test(readFileSync(p, 'utf8'))) ?? pool[0] ?? null;
   return f ? f.replace(/\\/g, '/').slice(DISTDIR.replace(/\\/g, '/').length + 1) : 'index.html'; })();
 const CASES = [
   { s: 'check-links', plant: (d) => edit(d, PAGE, '<main', '<a href="/blog/no-such-page-xyz">x</a><main') },

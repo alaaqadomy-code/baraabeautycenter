@@ -299,7 +299,7 @@ const faqHome = [
   ["مين خبيرة المكياج في السنتر؟", `${B.owner}، خبيرة مكياج العرائس وصاحبة السنتر، وبتقدّم دورات خاصة وماستر كلاس. شغلها منشور على <a href="${B.ig}" target="_blank" rel="noopener">إنستغرام</a> (+${B.igFollowers} متابع)، وتعرّفي عليها كـ<a href="/makeup-artist/">ميك اب ارتست الزرقاء</a>.`],
 ];
 const faqBridal = [
-  ["متى لازم أحجز مكياج العرس؟", `المواعيد متوفرة بأعداد محدودة شهرياً، فننصحك تحجزي بمجرد ما يتحدد تاريخ العرس، خصوصاً بموسم الأعراس بالصيف. واحجزي جلسة التجربة ويوم العرس معاً حتى نضمن الموعدين بنفس الوقت.`],
+  ["متى لازم أحجز مكياج العرس؟", `المواعيد متوفرة بأعداد محدودة شهرياً، فننصحك تحجزي بمجرد ما يتحدد تاريخ العرس، خصوصاً بموسم الأعراس بالصيف. واحجزي جلسة التجربة ويوم العرس معاً حتى تثبّتي الموعدين بنفس الوقت.`],
   ["هل مدام براءة بتعمل مكياج العروس بنفسها؟", `نعم، مكياج عرايس الفستان الأبيض مع مدام براءة شخصياً، من جلسة التجربة ليوم العرس، حتى تكون النتيجة يوم الفرح هي نفسها اللي اتفقتوا عليها بالتجربة. والمرافقات بيتجهزوا مع الفريق بنفس الموعد.`],
   ["هل بتجوا عالبيت أو الفندق يوم العرس؟", `نعم، تجهيز العروس والمرافقات بالبيت أو غرفة الفندق متوفر بـعمّان والزرقاء وإربد والسلط ومادبا وجرش وعجلون والمفرق. أو تشرفينا بالسنتر في ${B.city}، ${B.area}. وجلسة التجربة الأفضل تكون بالسنتر.`],
   ["هل بتجهزوا أهل العروس وصاحباتها؟", `أكيد، في خدمة للعروس والمرافقات بنفس اليوم والمكان: أم العروس والأخوات والصاحبات، بلوكات متناسقة بالصور بدون ما تنافس العروس. رتبي الدور معنا وقت الحجز: المرافقات أولاً والعروس آخر وحدة.`],
@@ -347,7 +347,7 @@ const faqHenna = [
   ["هل بتجهزوا عروس الحنّة؟", `نعم، مكياج وتسريحة عروس الحنّة بالسنتر في ${B.city}، ${B.area}، أو بالبيت ضمن الخدمة المنزلية لأن الحنّة غالباً بتكون بالبيت أو بالصالة القريبة. جيبي صورة للثوب حتى نبني اللوك على ألوانه.`],
   ["شو الفرق بين مكياج الحنّة ومكياج العرس؟", `مكياج الحنّة ألوانه أدفى وأجرأ ليناسب الثوب المطرّز وأجواء الليلة والدبكة، ومكياج العرس أنعم وبيتنسّق مع الفستان الأبيض والطرحة. ولما تتجهزي لليلتين عندنا بنخطط اللوكين معاً حتى تبيني مختلفة بكل ليلة.`],
   ["هل بتجهزوا أهل العروس وصاحباتها لليلة الحنّة؟", `نعم، في خدمة للمرافقات بنفس اليوم والمكان، بلوكات دافية متناسقة مع أجواء الحنّة بدون ما تنافس العروس. حددي عدد المرافقات وقت الحجز حتى نحسب الوقت.`],
-  ["كيف أحجز تجهيز عروس الحنّة؟", `اتصلي على ${B.phoneLocal} أو راسلينا على إنستغرام، وللبيت على ${B.phoneHomeLocal}. المواعيد محدودة بموسم الأعراس، فاحجزي الحنّة والعرس بنفس الوقت حتى نضمن الموعدين، واذكري موعد بداية السهرة وعدد المرافقات.`],
+  ["كيف أحجز تجهيز عروس الحنّة؟", `اتصلي على ${B.phoneLocal} أو راسلينا على إنستغرام، وللبيت على ${B.phoneHomeLocal}. المواعيد محدودة بموسم الأعراس، فاحجزي الحنّة والعرس بنفس الوقت حتى تثبّتي الموعدين، واذكري موعد بداية السهرة وعدد المرافقات.`],
 ];
 
 const nav = cur => {
@@ -656,9 +656,11 @@ const ANSWERS = {
   '/hair-spa/': `${B.name} بالزرقاء بيعمل حمام زيت وحمام كريم لترطيب الشعر الجاف والمتعب من الصبغة والسشوار، وبيرجّعله النعومة واللمعة.`,
   '/hair-extensions/': `${B.name} بالزرقاء بيركّب اكستنشن شعر بلون متطابق مع شعرك لطول وكثافة إضافية، للعرايس والمناسبات والاستخدام اليومي.`,
 };
-const landing = ({ path, crumb, title, desc, h1, h1Shine, eyebrow, slogan, lead, hero, ogImg, sections, faq, service, also }) => page({
+// الجداول تتمرّر أفقياً على الجوال بدل أن توسّع الصفحة (داخل .gtable أيضاً)
+const wrapTables = h => h.replace(/(<div class="gtable"[^>]*>)?(<table\b[\s\S]*?<\/table>)/g, (m, g = "", tb) => g + `<div class="table-wrap">${tb}</div>`);
+const landing = ({ path, crumb, title, desc, h1, h1Shine, eyebrow, slogan, lead, hero, ogImg, sections, faq, schemaFaq = [], service, also }) => page({
   path, title, desc, lcp: hero, ogImg: ogImg || hero, commercial: true,
-  schema: [serviceLD(crumb, desc, path), faqLD(faq), crumbLD([['الرئيسية', '/'], [crumb, path]]), { '@type': 'WebPage', '@id': `${SITE}${path}#page`, url: `${SITE}${path}`, name: crumb, inLanguage: 'ar-JO', about: { '@id': salonId }, dateModified: pageDate(path) }],
+  schema: [serviceLD(crumb, desc, path), faqLD([...faq, ...schemaFaq]), crumbLD([['الرئيسية', '/'], [crumb, path]]), { '@type': 'WebPage', '@id': `${SITE}${path}#page`, url: `${SITE}${path}`, name: crumb, inLanguage: 'ar-JO', about: { '@id': salonId }, dateModified: pageDate(path) }],
   body: `
 <section class="hero hero--page" aria-labelledby="h1">
   ${heroMedia([[hero, h1]])}
@@ -724,6 +726,7 @@ ${splitSec({ eyebrow: 'تسريحات', h: 'كمّلي الإطلالة بتسر
 
 const homeSvc = landing({
   path: '/home-service/', crumb: 'خدمة تجميل منزلية', hero: P.mua2,
+  schemaFaq: CITIES.flatMap(c => c.faq), // أسئلة المحافظات ظاهرة في govSec فتدخل FAQPage أيضاً
   title: `خدمة تجميل منزلية بالزرقاء وعمّان | ميك اب منزلي وكوافيرة`,
   desc: `خدمة تجميل منزلية: مكياج وسشوار وتجهيز عرايس ومرافقات بالبيت أو الفندق في الزرقاء وعمّان وإربد والسلط ومادبا وجرش وعجلون والمفرق. ${B.phoneHomeLocal}`,
   eyebrow: 'خدمة منزلية وفندقية', h1: 'خدمة تجميل منزلية في الزرقاء وعمّان', h1Shine: -3, slogan: 'دلالكِ يوصلكِ وين ما كنتِ',
@@ -1098,7 +1101,7 @@ for (const p of Object.keys(pageUpdated)) if (!pages[p]) throw new Error('page-d
 rmSync(OUT, { recursive: true, force: true });
 for (const [p, html] of Object.entries(pages)) {
   mkdirSync(OUT + p, { recursive: true });
-  writeFileSync(`${OUT}${p}index.html`, minify.html(rebase(html)));
+  writeFileSync(`${OUT}${p}index.html`, minify.html(rebase(wrapTables(html))));
 }
 writeFileSync(`${OUT}/404.html`, minify.html(rebase(notFound)));
 // prices: published only when prices.live (all numbers from the owner); otherwise a local noindex preview outside docs/

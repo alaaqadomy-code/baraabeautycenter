@@ -43,7 +43,9 @@ for (const { url, html, noindex } of all) {
   for (const l of head.matchAll(/<link[^>]+rel="stylesheet"[^>]*href="(https?:)?\/\/([^/"]+)/g)) add(url, `stylesheet خارجي من ${l[2]}`);
   if (html.length / 1024 > MAX_HTML) add(url, `HTML ${(html.length / 1024).toFixed(0)} KB > ${MAX_HTML}`);
   const main = html.match(/<main[\s\S]*?<\/main>/)?.[0] ?? html;
-  const h1 = main.search(/<h1[\s>]/), firstEager = main.search(/<img\s(?![^>]*loading="lazy")/);
+  // صورة hero قبل H1 مقبولة إن أُعلنت عنصر LCP صراحةً (fetchpriority="high"، غير كسولة) كما يوصي web.dev؛
+  // المرفوض صورة غير كسولة بلا أولوية تسبق النص (تركيب براءة، 23 نوفمبر 2026)
+  const h1 = main.search(/<h1[\s>]/), firstEager = main.search(/<img\s(?![^>]*loading="lazy")(?![^>]*fetchpriority="high")/);
   if (h1 === -1) add(url, 'لا H1 في main'); else if (firstEager !== -1 && firstEager < h1) add(url, 'صورة غير كسولة قبل H1 (LCP صورة لا نص)');
   const imgs = [...main.matchAll(IMG)].map((m) => m[0]);
   imgs.slice(1).forEach((t) => { if (!/loading="lazy"/.test(t)) add(url, 'صورة بعد الأولى بلا loading="lazy"'); });

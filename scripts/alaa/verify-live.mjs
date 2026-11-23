@@ -35,7 +35,10 @@ if (urls.length) {
   if (!bad) pass(`كل صفحات الخريطة المفحوصة (${list.length}) ترجع 200`);
 }
 const css = home.match(/<link[^>]*rel="stylesheet"[^>]*href="([^"]+\.css[^"]*)"/)?.[1];
-if (!css) fail('لا stylesheet في الرئيسية'); else { try { const r = await fetchRetry(new URL(css, BASE).href); r.status === 200 ? pass('CSS 200') : fail(`CSS ${r.status}`); } catch { fail('تعذّر جلب CSS'); } }
+// CSS مضمّن عمداً في <style> (موقع ثابت يدمج أنماطه) يكفي إن كان حقيقياً (≥ 500 حرف): تركيب براءة، 23 نوفمبر 2026
+const inlineCss = [...home.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].reduce((n, m) => n + m[1].length, 0);
+if (!css && inlineCss >= 500) pass(`CSS مضمّن في الرئيسية (${inlineCss} حرفاً)`);
+else if (!css) fail('لا stylesheet في الرئيسية (لا <link rel=stylesheet> ولا <style> حقيقي)'); else { try { const r = await fetchRetry(new URL(css, BASE).href); r.status === 200 ? pass('CSS 200') : fail(`CSS ${r.status}`); } catch { fail('تعذّر جلب CSS'); } }
 const og = home.match(/property="og:image"\s+content="([^"]+)"/)?.[1];
 if (!og) fail('الرئيسية بلا og:image'); else { try { const r = await fetchRetry(new URL(og, BASE).href); r.status === 200 ? pass('صورة OG 200') : fail(`صورة OG ${r.status}`); } catch { fail('تعذّر جلب OG'); } }
 for (const a of [...CONFIG.liveAssets, '/_redirects']) { await sleep(200); try { const r = await fetchRetry(BASE + a); if (a === '/_redirects') { r.status === 404 ? pass('_redirects غير معروض (سليم)') : warn('_redirects معروض للعلن'); } else if (r.status !== 200) warn(`${a} يرجع ${r.status}`); } catch { warn(`تعذّر جلب ${a}`); } }

@@ -98,7 +98,8 @@ const RULES = [
   { re: /ـ{4,}|[؟!]{3,}/gu, msg: 'تطويل أو ترقيم مكرّر' },
 ];
 
-const SKIP_DIRS = new Set(['node_modules', '.git', 'dist', '.astro', 'public']);
+// scripts: سكربتات الحزمة والأدوات ليست محتوى؛ و.mjs/.js/.html لمواقع يولّد محتواها سكربت (براءة، 23 نوفمبر 2026)
+const SKIP_DIRS = new Set(['node_modules', '.git', 'dist', '.astro', 'public', 'scripts', 'out', 'docs', 'build']);
 
 function walk(dir, out = []) {
   for (const e of readdirSync(dir)) {
@@ -106,7 +107,7 @@ function walk(dir, out = []) {
     const p = join(dir, e);
     const st = statSync(p);
     if (st.isDirectory()) walk(p, out);
-    else if (['.md', '.mdx', '.ts', '.astro'].includes(extname(e))) out.push(p);
+    else if (['.md', '.mdx', '.ts', '.astro', '.mjs', '.js', '.html', '.njk', '.json'].includes(extname(e))) out.push(p);
   }
   return out;
 }
